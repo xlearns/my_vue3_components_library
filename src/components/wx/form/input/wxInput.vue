@@ -1,12 +1,6 @@
 <template>
-	<div class="wxform">
-		<input
-			ref="input"
-			:type="type"
-			:model-value="modelValue"
-			@input="handleInput"
-			@blur="handleBlur"
-		/>
+	<div>
+		<slot></slot>
 	</div>
 </template>
 <script>
@@ -14,31 +8,33 @@ import {
 	defineComponent,
 	reactive,
 	toRefs,
+	provide,
 	getCurrentInstance,
-	watch,
-	computed,
+	inject,
 } from "vue";
-import { dispatch, broadcast } from "@/components/wx/utils/emitter";
 
 export default defineComponent({
-	name: "wxInput",
+	name: "wxForm",
 	props: {
-		modelValue: {},
-		type: { type: String, default: "text" },
+		model: { type: Object },
+		rules: { type: Object },
 	},
-	setup(props, context) {
+	setup(props) {
 		let status = reactive({
-			currentValue: "",
+			fields: [],
 		});
 		let { proxy } = getCurrentInstance();
+		provide("form", props);
+		provide("form-add", (field) => {
+			if (field) status.fields.push(field);
+		});
+		provide("form-remove", (field) => {
+			if (field.prop) status.fields.splice(status.fields.indexOf(field), 1);
+		});
+
 		let methods = {
-			handleInput(e) {
-				const value = e.target.value;
-				context.emit("update:modelValue", value);
-				dispatch(proxy, "wxFormItem", "form-change", value);
-			},
-			handleBlur() {
-				dispatch(proxy, "wxFormItem", "form-blur", status.currentValue);
+			resetFields() {
+				status.fields.forEach((field) => field.resetField());
 			},
 		};
 		return {
@@ -48,7 +44,3 @@ export default defineComponent({
 	},
 });
 </script>
-
-<style lang="scss">
-@import "@/components/wx/form/wxform.scss";
-</style>
