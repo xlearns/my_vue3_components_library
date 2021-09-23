@@ -1,0 +1,85 @@
+.table_com {
+  padding: 0 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+  height:calc(100% - 32px);
+  .color_blue {
+    color: #42c4ff;
+  }
+  .seleced {
+    background: #e6f7ff;
+    border: 1px solid #bae7ff;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 24px;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    .seleced_logo {
+      display: block;
+      width: 14px;
+      height: 14px;
+      background: url(../assets/Shape.png) no-repeat left center/100%;
+      margin-right: 4px;
+    }
+  }
+  tr > td:last-child > .cell .el-button--text:last-child {
+    color: #fb5445;
+  }
+}
+// .table_com{
+//   height: 100%;
+//   .el-checkbox{
+//     --el-checkbox-border-radius: 50% ;
+//   }
+//   .el-table,.el-table__expanded-cell {
+//             background-color: #f2f2f2 !important;
+//         }
+//   .el-table{
+//     --el-table-header-background-color: #fff;
+//     --el-table-row-hover-background-color:'';
+//     .el-tooltip__popper{font-size: 14px; max-width:10% }
+//     .el-table__header th, .el-table__header tr {
+//       background-color: #f2f2f2;
+//       // color:#333;
+//       font-size:15px;
+//       border: none
+//     }
+//     .el-table__body{
+//       border-collapse: separate;
+//       border-spacing: 0px 15px;
+//       background: #f2f2f2;
+//     }
+//     tr,td{
+//       border:none;
+//     }
+//     .el-table__row td:nth-of-type(1){
+//         border-radius: 15px 0 0 15px;
+//     }
+//     .el-table__row td:last-child{
+//       border-radius: 0 15px 15px 0;
+//   }
+//     .el-table__body-wrapper{
+//       // height:auto !important;
+//     }
+//     .el-table__row:hover{
+//       background:#2b4179;
+//       box-shadow: 5px 5px 25px 5px #f2f2f2;
+//       .obtn{
+//         button{
+//           color:#fff
+//         }
+//       }
+//       td{
+//         color:#fff;
+//       }
+//     }
+//   }
+//   .ellipsis{
+//     display: block;
+//     overflow: hidden;
+//     white-space: nowrap;
+//     width: 100%;
+//     text-overflow: ellipsis;
+//   }
+// }

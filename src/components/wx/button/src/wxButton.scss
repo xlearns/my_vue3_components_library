@@ -1,0 +1,18 @@
+$wx-border-radius-base:4px;
+.wx-button{
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius:$wx-border-radius-base;
+  min-height:40px;
+  box-sizing: border-box;
+  outline: none;
+  white-space: nowrap;
+  cursor: pointer;
+  margin:0 15px;
+  border:1px solid #fff;
+}
+.wx-button:active{
+  border:1px solid #409eff;
+  color:#fff;
+  background: rgb(255,255,255,0.5)
+}

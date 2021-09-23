@@ -1,0 +1,29 @@
+.echi-manage {
+  height: calc(100% - 56px);
+  .el-input {
+    width: 300px;
+  }
+  .table {
+    margin-top: 14px;
+    height: calc(100% - 98px);
+  }
+  .el-dialog {
+    .el-dialog__body {
+      padding: 20px 30px;
+      p {
+        height: 30px;
+        line-height: 30px;
+        .label {
+          width: 120px;
+          display: inline-block;
+        }
+        .state {
+          color: #66CC66;
+        }
+      }
+    }
+  }
+}
+.acces-list {
+  height: 100%;
+}

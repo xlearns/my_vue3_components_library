@@ -1,0 +1,44 @@
+@mixin height($a) {
+  height: $a;
+  line-height: $a;
+};
+.app-manage {
+  height: 100%;
+  .select-btn {
+    margin-bottom: 12px;
+    .el-button {
+      margin-left: 12px;
+    }
+  }
+  .app-table {
+    height: calc(100% - 97px);
+  }
+  .el-dialog__body {
+    padding: 0 20px;
+    h4 {
+      margin-bottom: 8px;
+    }
+    .el-form {
+      margin-left: 12px;
+    }
+    .el-upload {
+      border: 1px solid #eee;
+      border-radius: 4px;
+      width: 40px;
+      @include height(40px)
+    }
+    .app-group {
+      padding: 12px 0;
+      .row-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        padding: 8px;
+        &:nth-child(2n) {
+          background-color: rgba(#eee, 0.2);
+        }
+      }
+    }
+  }
+}

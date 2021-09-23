@@ -1,0 +1,21 @@
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 230px;
+}
+.logo {
+  height: 60px;
+  line-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.el-menu-item.is-active i {
+  color: #909399 !important;
+}
+.active{
+  color: rgb(255, 208, 75)!important;
+  background-color: rgb(84, 92, 100)!important;
+}
+.default{
+  color: #fff!important;
+  background-color: #0f2459!important;
+}

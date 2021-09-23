@@ -1,0 +1,15 @@
+.user-group {
+  height: 100%;
+  .select-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .el-input {
+      width: 300px;
+    }
+  }
+  .table {
+    margin-top: 14px;
+    height: calc(100% - 46px);
+  }
+}

@@ -1,0 +1,24 @@
+.control_nav {
+  line-height: 3rem;
+  color: #fff;
+  header {
+    height: 6rem;
+    background: url("../assets/home/header.png") no-repeat top;
+    .return {
+      position: absolute;
+      line-height: 3rem;
+      font-size: 1.5rem;
+      color: hsla(0, 0%, 100%, 0.7);
+      cursor: pointer;
+    }
+    h1 {
+      padding-top: 1.2rem;
+      text-align: center;
+    }
+    .showTime {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}

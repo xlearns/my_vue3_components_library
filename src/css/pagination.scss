@@ -1,0 +1,13 @@
+.el-pagination {
+  background: #fff;
+  margin-left: 304px !important;
+  height:28px;
+  .active {
+    color: #fff !important;
+    background-color: #30beff !important;
+  }
+}
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev {
+  padding: 9px !important;
+}

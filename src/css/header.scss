@@ -1,0 +1,120 @@
+@mixin height($val) {
+  height: $val;
+  line-height: $val;
+}
+.header {
+  $logo_size:3.6vw;
+  background-color: #fff;
+  height: 95px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  .max{
+    width:3em;
+  }
+  .top_speed {
+    color: #50e3c2;
+  }
+  .bottom_speed {
+    color: #00d2fa;
+  }
+  .logo-container {
+    padding-right: 30px;
+    text-align: right;
+    .logo {
+      width: 32px;
+      height: 32px;
+      padding: 0 0 0 20px;
+    }
+    .logo-info {
+      font-family: "华文琥珀";
+      font-size: 0.1vw;
+      color: #fff;
+    }
+  }
+  .summary {
+    display: flex;
+    justify-content: space-between;
+    .box {
+      // border-right:1px solid #E8E8E8 !important;  
+      width: 13.02vw;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      .logo{
+        display: block;
+        width: $logo_size;
+        height: $logo_size;
+        margin-right: 0.41vw;
+      }
+      .zaixian{
+        background: url(../assets/header/zaixian@2x.png) no-repeat left center/contain;
+      }
+      .kexin{
+        background: url(../assets/header/kexin.png) no-repeat left center/contain;
+      }
+      .wangguan{
+        background: url(../assets/header/wangguan.png) no-repeat left center/contain;
+      }
+      .cpu_logo{
+        background: url(../assets/header/cpu.png) no-repeat left center/contain;
+      }
+      .xitong{
+        background: url(../assets/header/xitong.png) no-repeat left center/contain;
+      }
+      .shiwangsu{
+        background: url(../assets/header/shiwangsu.png) no-repeat left center/contain;
+      }
+      img {
+        margin-right: 0.41vw;
+      }
+      span {
+        color: #333;
+        font-weight: bold;
+        font-family: "MicrosoftYaHei-Bold, MicrosoftYaHei";
+        font-size: 0.1vw;
+        i {
+          font-style: normal;
+          color: #4f98fe;
+        }
+      }
+      p {
+        color: #999;
+        font-size: 0.7vw;
+        margin-top: 0.31vw;
+      }
+      .real-time {
+        color: #ff9600;
+      }
+      .cpu {
+        color: #4f98fe;
+      }
+    }
+   .last {
+      .speed {
+        display: flex;
+        span {
+          display: block;
+          font-size: 0.6vw;
+          i {
+            color: #30beff;
+          }
+        }
+      }
+    }
+    .box::after{
+      display: block;
+      content:' ';
+      margin-left: 2.3vw;
+      width: 1px;
+      height: 58px;
+      background: #E8E8E8;
+    }
+    .last::after {
+      width:0;
+    }
+  }
+
+}

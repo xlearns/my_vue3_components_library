@@ -1,0 +1,46 @@
+.acces-edit {
+  background-color: white;
+  padding: 12px;
+  height: 100%;
+  box-sizing: border-box;
+  .edit-name {
+    height: 40px;
+    span {
+      &:nth-child(1) {
+        color: #2b4179;
+      }
+    }
+  }
+  .table-list {
+    border: 1px solid #eee;
+    height: calc(100% - 40px);
+    .title {
+      height: 50px;
+      line-height: 50px;
+      padding: 0 20px;
+      .el-button {
+        margin-left: 12px;
+      }
+    }
+    .table {
+      height: calc(100% - 50px);
+    }
+  }
+  .el-dialog {
+    .el-dialog__body {
+      padding: 10px 20px;
+    }
+    .el-tree-node__content {
+      height: 40px;
+      .tree-node {
+        display: flex;
+        align-items: center;
+        img {
+          width: 20px;
+          height: 20px;
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}

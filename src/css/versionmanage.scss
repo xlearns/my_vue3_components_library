@@ -1,0 +1,97 @@
+.versionmanage {
+   
+  .label {
+    // margin-right: 10px;
+  }
+  .obtn {
+    display: flex;
+  }
+  .add_user .el-select {
+    width: 100%;
+  }
+  .left {
+    .el-input {
+      // width: 90px;
+      width: 5.5vw;
+    }
+    .el-date-editor {
+      // width: auto;
+      width: 5.5vw;
+    }
+  }
+  .user_name .el-form-item__label::before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+  .head-title {
+    text-align: left;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    span {
+      font-size: 16px;
+      color: #333;
+      font-family: "微软雅黑 Bold", "微软雅黑";
+    }
+  }
+  .split-line {
+    border: 1px solid #e4e4e4;
+  }
+  .operate {
+    // width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+    .left {
+      width: 100%;
+      display: flex;
+      .el-button {
+        // margin-left: 20px;
+      }
+      .right {
+        margin-left: auto;
+      }
+      div {
+        margin-right: 2px;
+      }
+    }
+  }
+  .operate .left {
+    .enter-input {
+      // margin: 0 20px;
+    }
+  }
+  .dialog-footer {
+    margin-top: 8px;
+    text-align: right;
+  }
+  .el-button {
+    margin-right: 0;
+  }
+  .btn {
+    height: 36px;
+    position: relative;
+    .el-button {
+      position: absolute;
+      top: 10px;
+      right: 40px;
+    }
+  }
+  .data-list {
+    position: relative;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 23px;
+    background: #ffffff;
+    border-radius: 10px;
+  }
+  .el-upload-dragger {
+    width: 380px;
+    margin-left: 18px;
+  }
+  tr > td:last-child > .cell .el-button--text:last-child {
+    color: #409eff;
+  }
+}

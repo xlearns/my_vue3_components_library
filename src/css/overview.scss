@@ -1,0 +1,67 @@
+.overview {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 6em);
+  .left,
+  .right,
+  .center {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    .item {
+      width: 100%;
+      flex: auto;
+      box-sizing: border-box;
+      .content-title {
+        height: 36px;
+        padding-left: 30px;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        background: url(~@/assets/home/split-line.png) no-repeat;
+      }
+      .box {
+        width: 100%;
+        min-height: 200px;
+        background-color: #0a0933;
+        height: calc(100% - 36px);
+      }
+    }
+  }
+  .left,
+  .right {
+    min-width: 300px;
+  }
+  .center {
+    flex: 1 1 auto;
+    margin: 0 20px;
+    .count-all {
+      height: 50px;
+      padding: 20px 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-around;
+      .item-block {
+        display: flex;
+        flex-direction: column;
+        color: #1acef4;
+        .num {
+          text-align: center;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        .name {
+          font-size: 14px;
+        }
+      }
+    }
+    #chart5 {
+      height: calc(100% - 36px);
+    }
+  }
+  .right {
+    #chart4 {
+      height: 280px;
+    }
+  }
+}

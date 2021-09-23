@@ -1,0 +1,107 @@
+.gateway {
+  min-width: 1000px;
+  .obtn {
+    display: flex;
+  }
+  .table_com{
+    height:calc(100% - 144px);
+  }
+  .seleced{
+    margin:0 24px
+  }
+  .add_user .el-select {
+    width: 100%;
+  }
+  .left {
+    .el-input {
+      // width: 90px;
+      width: 20vw;
+    }
+    .el-date-editor {
+      // width: auto;
+      // width: 5.5vw;
+    }
+  }
+  .addrules .el-form-item__label::before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+  .user_name .el-form-item__label::before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+  .head-title {
+    text-align: left;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    span {
+      font-size: 16px;
+      color: #333;
+      font-family: "微软雅黑 Bold", "微软雅黑";
+    }
+  }
+  .split-line {
+    border: 1px solid #e4e4e4;
+  }
+  // .data-list {
+  //   height: calc(100vh - 288px);
+  //   padding: 0 16px 16px;
+  // }
+  // .operate {
+  //   // width: 100%;
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   padding: 20px;
+  //   .left {
+  //     width: 100%;
+  //     display: flex;
+  //     .el-button {
+  //       // margin-left: 20px;
+  //     }
+  //     .right {
+  //       padding-top: 8px;
+  //       margin-left: auto;
+  //     }
+  //     div {
+  //       margin-right: 2px;
+  //     }
+  //   }
+  // }
+  .operate {
+    // width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0px 20px;
+    margin-bottom: 16px;
+    .left {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .right {
+        margin-left: 20px;
+      }
+    }
+    .el-form .el-form-item {
+      margin-bottom: 0px;
+    }
+  }
+  .dialog-footer {
+    margin-top: 8px;
+    text-align: right;
+  }
+  .data-list {
+    // height: 36vw;
+    position: relative;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 23px;
+    background: #ffffff;
+    border-radius: 10px;
+  }
+}

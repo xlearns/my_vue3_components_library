@@ -1,0 +1,91 @@
+.operationlog {
+   
+  .label {
+    // margin-right: 10px;
+  }
+  .upload-demo {
+    // text-align: center;
+    width: 360px;
+    margin: 0 auto;
+  }
+  .obtn {
+    display: flex;
+  }
+  .add_user .el-select {
+    width: 100%;
+  }
+  .left {
+    .el-input {
+      width: 5.5vw;
+    }
+  }
+  //   @media screen and (max-width: 1400px) {
+  //     .left {
+  //       .el-input {
+  //         width: 4vw;
+  //       }
+  //     }
+  // }
+  .flex {
+    display: flex;
+  }
+  .el-date-editor {
+    width: 15vw !important;
+  }
+  .margin_left_auto .el-button span {
+    color: white;
+  }
+  .margin_left_auto {
+    // margin-left: auto;
+  }
+  .user_name .el-form-item__label::before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+  .head-title {
+    text-align: left;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    span {
+      font-size: 16px;
+      color: #333;
+      font-family: "微软雅黑 Bold", "微软雅黑";
+    }
+  }
+  .split-line {
+    border: 1px solid #e4e4e4;
+  }
+  .operate {
+    // width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+    .left {
+      // width: 100%;
+      display: flex;
+
+      div {
+        margin-right: 4px;
+      }
+    }
+
+    // .el-form .el-form-item {
+    //   margin-bottom: 0px;
+    // }
+  }
+  .dialog-footer {
+    margin-top: 8px;
+    text-align: right;
+  }
+  .data-list {
+    position: relative;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 23px;
+    background: #ffffff;
+    border-radius: 10px;
+  }
+}

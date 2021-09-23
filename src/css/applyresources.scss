@@ -1,0 +1,70 @@
+.applyresources {
+   
+  .label {
+    // margin-right: 10px;
+  }
+  .obtn {
+    display: flex;
+  }
+  .add_user .el-select {
+    width: 100%;
+  }
+  .left {
+    .el-input {
+      // width: 90px;
+      width: 5.5vw;
+    }
+    .el-date-editor {
+      // width: auto;
+      width: 5.5vw;
+    }
+  }
+  .user_name .el-form-item__label::before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+  .head-title {
+    text-align: left;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    span {
+      font-size: 16px;
+      color: #333;
+      font-family: "微软雅黑 Bold", "微软雅黑";
+    }
+  }
+  .split-line {
+    border: 1px solid #e4e4e4;
+  }
+  .operate {
+    // width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    .left {
+      width: 100%;
+      display: flex;
+      .el-button {
+        margin-left: 20px;
+      }
+      .right {
+        margin-left: auto;
+      }
+      div {
+        margin-right: 2px;
+      }
+    }
+  }
+  .operate .left {
+    .enter-input {
+      // margin: 0 20px;
+    }
+  }
+  .dialog-footer {
+    margin-top: 8px;
+    text-align: right;
+  }
+}

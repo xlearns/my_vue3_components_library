@@ -1,0 +1,287 @@
+.resourcemanage {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding: 24px;
+  position: relative;
+  border-radius: 15px;
+  background: #fff;
+  overflow: hidden;
+  height: calc(100vh - 150px);
+  .all {
+    height: 100%;
+  }
+  .oform {
+    margin-top: 30px;
+  }
+  .loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .el-upload-list__item .el-progress__text {
+    right: -25px !important;
+  }
+  .label {
+    // margin-right: 10px;
+  }
+  .upload-demo {
+    // text-align: center;
+    width: 360px;
+    margin: 0 auto;
+  }
+  .obtn {
+    display: flex;
+  }
+  .add_user .el-select {
+    width: 100%;
+  }
+  .left {
+    .el-input {
+      // width: 90px;
+      width: 15vw;
+    }
+  }
+  .flex {
+    display: flex;
+  }
+  .margin_left_auto .el-button span {
+    color: white;
+  }
+  .margin_left_auto {
+    margin-left: auto;
+  }
+  .user_name .el-form-item__label::before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+  .head-title {
+    text-align: left;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    span {
+      font-size: 0.83vw;
+      color: #333;
+      font-family: "微软雅黑 Bold", "微软雅黑";
+    }
+  }
+  .split-line {
+    border: 1px solid #e4e4e4;
+  }
+  .operate {
+    // width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    .left {
+      width: 100%;
+      display: flex;
+      .el-button {
+        // margin-left: 20px;
+      }
+      .right {
+        // margin-left: auto;
+        margin-left: 40px;
+      }
+      div {
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .app_table {
+    overflow-y: auto;
+    .app_table__add {
+      display: flex;
+      height: 140px;
+      background: #ffffff;
+      border-radius: 2px;
+      border: 1px dashed #d9d9d9;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      span {
+        display: block;
+        width: 0.83vw;
+        height: 0.83vw;
+        margin-right: 4px;
+        background: url(../assets/tianjia@2x.png) no-repeat left center/100%;
+      }
+    }
+  }
+  .app_table__add,
+  .app_table__item {
+    margin-bottom: 20px;
+  }
+
+  .app_table__item:hover {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.09);
+  }
+  .app_table__item {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    height: 140px;
+    background: #ffffff;
+    border-radius: 2px;
+    border: 1px solid #d9d9d9;
+    .color_99 {
+      color: #999;
+      font-size: 0.83vw;
+    }
+    .app_table__item--left {
+      margin-right: 0.83vw;
+      width: 4.2vw;
+      .logo {
+        display: block;
+        width: 2.5vw;
+        height: 2.5vw;
+        margin: 1.5vw 0 0 1.7vw;
+        border-radius: 15px;
+      }
+    }
+    .app_table__item--right {
+      padding-top: 1.45vw;
+      flex: 1;
+      .ellipsis {
+        // width:10em;
+        width: 10vw;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .flex {
+        display: flex;
+        align-items: center;
+      }
+      .mt8 {
+        margin-top: 8px;
+      }
+      .logo {
+        display: block;
+        width: 17px;
+        height: 0.83vw;
+        background: url("../assets/dengji@2x.png") no-repeat left top/contain;
+      }
+    }
+    .modal {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 62px;
+      background: #f7f9fa;
+      display: flex;
+      .item {
+        width: 33%;
+        cursor: pointer;
+        .modal_logo {
+          display: block;
+          width: 0.83vw;
+          height: 0.83vw;
+          margin: 0.62vw auto 0.36vw;
+        }
+        .modal_check {
+          background: url(../assets/chakan@2x.png) no-repeat left top/contain;
+        }
+        .modal_remove {
+          background: url(../assets/yichu@2x.png) no-repeat left top/contain;
+        }
+        .modal_change {
+          background: url(../assets/genggai@2x.png) no-repeat left top/contain;
+        }
+        .textcenter {
+          text-align: center;
+          font-size: 0.62vw;
+        }
+      }
+      .line {
+        width: 1px;
+        height: 30px;
+        margin-top: 17px;
+        background: #e8e8e8;
+      }
+    }
+    .check {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+    }
+    input[type="checkbox"] {
+      cursor: pointer;
+      position: relative;
+      width: 18px;
+      height: 18px;
+      font-size: 0.83vw;
+      visibility: hidden;
+    }
+    input[type="checkbox"]::after {
+      position: absolute;
+      top: 0;
+      background-color: #fff;
+      color: #fff;
+      border: 1px solid #b1b1b1;
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      visibility: visible;
+      padding-left: 0px;
+      text-align: center;
+      content: " ";
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"]:checked::after {
+      background-color: #30beff;
+      border: none;
+      content: "\2713";
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+  .dialog-footer {
+    margin-top: 8px;
+    text-align: right;
+  }
+  .operate--bottom {
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    margin-bottom: 24px;
+    .all {
+      display: block;
+      width: 24px;
+      height: 24px;
+      margin-right: 24px;
+      background: url(../assets/quanbu@2x.png) no-repeat left top/contain;
+    }
+    .all_delete {
+      margin-left: 16px;
+    }
+  }
+  .seleced {
+    background: #e6f7ff;
+    border: 1px solid #bae7ff;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 24px;
+    margin: 0.83vw 0;
+    display: flex;
+    align-items: center;
+    .seleced_logo {
+      display: block;
+      width: 14px;
+      height: 14px;
+      background: url(../assets/Shape.png) no-repeat left center/100%;
+      margin-right: 4px;
+    }
+  }
+
+  .content {
+    height: calc(100% - 158px);
+    overflow-x: hidden;
+  }
+}
