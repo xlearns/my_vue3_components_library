@@ -219,12 +219,11 @@ export default defineComponent({
 			},
 			handleSubmit() {
 				proxy.$refs.form.validate((item) => {
-					console.log(item);
 					if (item) {
-						consle.log("1");
+						proxy.$wxMessage.warning("成功");
 					} else {
 						// alert("失败");
-						console.log("失败");
+						proxy.$wxMessage.info("登录失败");
 						// proxy.$message.error("失败");
 					}
 				});
@@ -233,7 +232,6 @@ export default defineComponent({
 				proxy.$refs.form.resetFields();
 			},
 		};
-		console.log(proxy.$wxMessage.success("呵呵你好世界"));
 		onUnmounted(() => {
 			document.onkeydown = undefined;
 		});

@@ -79,7 +79,6 @@ export default defineComponent({
 			},
 			getRules() {
 				let formRules = form.rules;
-				// console.log(formRules, props.prop);
 				formRules = formRules ? formRules[props.prop] : [];
 				return formRules;
 			},
@@ -110,18 +109,12 @@ export default defineComponent({
 			},
 			resetField() {
 				status.message = "";
-				// Object.keys(form.model).forEach((item) => {
-				// 	form.model[item] = status.initialValue;
-				// });
-				// console.log(form.model);
 				form.model[props.prop] = status.initialValue;
 			},
 			onFieldBlur() {
-				// console.log("blur");
 				methods.validate("blur");
 			},
 			onFieldChange() {
-				// console.log("change");
 				methods.validate("change");
 			},
 		};
