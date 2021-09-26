@@ -1,9 +1,11 @@
-import { isContext } from "vm";
 import { createStore } from "vuex";
 
 export default createStore({
   state: {
     error: false,
+    wxMaxFrame:0,
+    wxMinFrame:0,
+    wxCurFrame:0,
     iswxFormBlur:false,
     wxFormValue:'',
     wxFormAdd:[],

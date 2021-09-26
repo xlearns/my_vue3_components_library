@@ -1,0 +1,19 @@
+.wxLoading{
+  $color: #000000;
+  overflow: hidden;
+  width: 100vw;
+  height:100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba($color, $alpha: 0.6);
+  canvas {
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+  }
+}

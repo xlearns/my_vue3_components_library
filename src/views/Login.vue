@@ -4,6 +4,7 @@
 			<div class="map"></div>
 			<div class="container">
 				<div class="login-container">
+					<wx-progress :type="otype" :cur="cur"></wx-progress>
 					<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
 					<wx-form :rules="fieldRules" :model="formData" ref="form">
 						<wx-form-item label="名称" prop="name">
@@ -12,70 +13,12 @@
 						<wx-form-item label="测试" prop="test">
 							<wx-input v-model="formData.test" />
 						</wx-form-item>
-						<wx-form-item label="下拉" prop="option">
-							<select v-model="formData.option">
-								<option>123</option>
-								<option>13</option>
-								<option>1234</option>
-							</select>
-						</wx-form-item>
 						<wx-button @click="handleSubmit">提 交</wx-button>
 						<wx-button @click="handleReset">重 置</wx-button>
 					</wx-form>
-					<!-- <wx-form
-						:model="loginForm"
-						:rules="fieldRules"
-						ref="form"
-						label-position="left"
-						label-width="0px"
-						@submit.prevent
-					>
-						<wx-form-item prop="admin_name" model="form">
-							<wx-input
-								type="text"
-								v-model="loginForm.admin_name"
-								prefix-icon="el-icon-user"
-								auto-complete="false"
-								placeholder="账号"
-								clearable
-							></wx-input>
-						</wx-form-item>
-						<wx-form-item prop="admin_password">
-							<wx-input
-								type="password"
-								v-model="loginForm.admin_password"
-								prefix-icon="el-icon-edit"
-								auto-complete="false"
-								placeholder="密码"
-								clearable
-								show-password
-							></wx-input>
-						</wx-form-item>
-						<wx-form-item prop="code" model="form" class="code">
-							<wx-input
-								type="text"
-								v-model="verify"
-								placeholder="验证码"
-								clearable
-							></wx-input>
-							<CanvasVarify ref="verifyRef" />
-						</wx-form-item>
-						<wx-form-item style="width: 100%">
-							<wx-button style="width: 48%" @click.prevent="reset" size="medium"
-								>重 置</wx-button
-							>
-							<wx-button
-								style="width: 48%"
-								@click="login"
-								size="medium"
-								:disabled="loginLoading"
-								:loading="loginLoading"
-								>登 录</wx-button
-							>
-						</wx-form-item>
-					</wx-form> -->
 				</div>
 			</div>
+			<wx-loading></wx-loading>
 		</div>
 	</div>
 </template>
@@ -88,7 +31,9 @@ import {
 	toRefs,
 	ref,
 	onUnmounted,
+	watch,
 	getCurrentInstance,
+	computed,
 } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElNotification } from "element-plus";
@@ -105,6 +50,8 @@ export default defineComponent({
 		const { proxy } = getCurrentInstance();
 		const form = ref(null);
 		const state = reactive({
+			cur: 20,
+			otype: 1,
 			formData: { name: "", test: "", option: "" },
 			loginForm: {
 				admin_name: "",
@@ -148,6 +95,10 @@ export default defineComponent({
 			loginLoading: false,
 			loginSuc: false,
 		});
+		let i = 0;
+		setInterval(() => {
+			state.cur += 0.05;
+		});
 		const methods = {
 			login() {
 				form.value.validate((valid) => {
@@ -172,7 +123,6 @@ export default defineComponent({
 											sessionStorage.setItem("menu", JSON.stringify(res.menu));
 											sessionStorage.setItem("token", res.token);
 											sessionStorage.setItem("name", res.admin_name);
-											store.state.userInfo = res.userInfo;
 										} else {
 											ElMessage.error(res.message);
 											state.loginLoading = false;
@@ -218,6 +168,7 @@ export default defineComponent({
 				};
 			},
 			handleSubmit() {
+				// proxy.$wxFrame.start(60);
 				proxy.$refs.form.validate((item) => {
 					if (item) {
 						proxy.$wxMessage.warning("成功");
@@ -229,6 +180,7 @@ export default defineComponent({
 				});
 			},
 			handleReset() {
+				// proxy.$wxFrame.stop();
 				proxy.$refs.form.resetFields();
 			},
 		};
