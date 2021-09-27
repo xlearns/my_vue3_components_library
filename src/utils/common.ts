@@ -69,3 +69,7 @@ export function isNumberStr(str:any){
   return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str)
 }
 export const exportDefault = 'export default '
+
+export function sendError(type:any,obj:Object){
+    console.error(type,obj)
+}

@@ -6,13 +6,23 @@ import wxFrame from "./frame/index";
 import wxButton from "./button/index";
 import wxProcess from "./progress/index";
 import wxLoading from "./loading/index";
+import {wxCheckbox, wxCheckboxGroup} from './checkbox'
+import {wxTable, wxTableHead,wxTableBody,wxTableTd,wxColumn} from './table/index'
 const components = [
   wxForm,
   wxFormItem,
   wxInput,
   wxButton,
   wxProcess,
-  wxLoading
+  wxLoading,
+  wxTable,
+  wxCheckbox,
+  wxCheckboxGroup,
+  wxTable, 
+  wxTableHead,
+  wxTableBody,
+  wxTableTd,
+  wxColumn
 ]
 const install = function(Vue:any,opts={}){
   components.forEach((component:any)=>{

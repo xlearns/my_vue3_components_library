@@ -1,25 +1,28 @@
 <template>
-	<div class="login" @keyup.prevent="keyup">
-		<div :class="`login-main ${loginSuc ? 'login1' : ''}`">
-			<div class="map"></div>
-			<div class="container">
-				<div class="login-container">
-					<wx-progress :type="otype" :cur="cur"></wx-progress>
-					<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
-					<wx-form :rules="fieldRules" :model="formData" ref="form">
-						<wx-form-item label="名称" prop="name">
-							<wx-input v-model="formData.name" />
-						</wx-form-item>
-						<wx-form-item label="测试" prop="test">
-							<wx-input v-model="formData.test" />
-						</wx-form-item>
-						<wx-button @click="handleSubmit">提 交</wx-button>
-						<wx-button @click="handleReset">重 置</wx-button>
-					</wx-form>
-				</div>
-			</div>
-			<wx-loading></wx-loading>
-		</div>
+	<div @keyup.prevent="keyup">
+		<wx-table :data="data">
+			<wx-column label="日期" prop="date" />
+			<wx-column label="姓名" prop="name" />
+			<wx-column label="省份" prop="address" />
+			<wx-column label="操作">
+				<template #default="scope">
+					<button @click="delClick(scope)">删除</button>
+				</template>
+			</wx-column>
+		</wx-table>
+		<wx-progress :type="otype" :cur="cur"></wx-progress>
+		<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
+		<wx-form :rules="fieldRules" :model="formData" ref="form">
+			<wx-form-item label="名称" prop="name">
+				<wx-input v-model="formData.name" />
+			</wx-form-item>
+			<wx-form-item label="测试" prop="test">
+				<wx-input v-model="formData.test" />
+			</wx-form-item>
+			<wx-button @click="handleSubmit">提 交</wx-button>
+			<wx-button @click="handleReset">重 置</wx-button>
+		</wx-form>
+		<wx-loading></wx-loading>
 	</div>
 </template>
 
@@ -41,9 +44,10 @@ import CanvasVarify from "@/components/DrawCanvas.vue";
 import { useStore } from "vuex";
 import { login } from "@/utils/api";
 import { throttle } from "throttle-debounce";
-
+import performance from "@/utils/performance";
 export default defineComponent({
 	setup() {
+		console.log("白屏时间:", performance.blankTime);
 		const router = useRouter();
 		const store = useStore();
 		const verifyRef = ref(null);
@@ -51,7 +55,29 @@ export default defineComponent({
 		const form = ref(null);
 		const state = reactive({
 			cur: 20,
-			otype: 1,
+			otype: 5,
+			data: [
+				{
+					date: "2016-05-03",
+					name: "Tom",
+					address: "No. 189, Grove St, Los Angeles",
+				},
+				{
+					date: "2016-05-02",
+					name: "Tom",
+					address: "No. 189, Grove St, Los Angeles",
+				},
+				{
+					date: "2016-05-04",
+					name: "Tom",
+					address: "No. 189, Grove St, Los Angeles",
+				},
+				{
+					date: "2016-05-01",
+					name: "Tom",
+					address: "No. 189, Grove St, Los Angeles",
+				},
+			],
 			formData: { name: "", test: "", option: "" },
 			loginForm: {
 				admin_name: "",
@@ -95,11 +121,13 @@ export default defineComponent({
 			loginLoading: false,
 			loginSuc: false,
 		});
-		let i = 0;
 		setInterval(() => {
 			state.cur += 0.05;
-		});
+		}, 1000 / 60);
 		const methods = {
+			delClick(row) {
+				console.log(row);
+			},
 			login() {
 				form.value.validate((valid) => {
 					if (valid) {

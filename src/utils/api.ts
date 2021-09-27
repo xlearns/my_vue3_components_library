@@ -1,4 +1,5 @@
 import axios from "axios"
+import {sendError} from './common'
 import router from "@/router/index"
 interface Data {
   [key: string]: any
@@ -28,6 +29,7 @@ axios.interceptors.response.use(
     return response
   },
   (error) => {
+    sendError('接口出错:',error)
     return Promise.reject(error)
   }
 )
