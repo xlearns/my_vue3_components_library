@@ -1,30 +1,60 @@
 <template>
-	<button class="wx-button" @click="handleClick">
+	<button
+		class="wx-button"
+		:disabled="disabled || loading"
+		:class="[
+			size ? `wx-button-${size}` : '',
+			type ? `wx-button-${type}` : '',
+			{ 'is-loading': loading },
+			{ 'is-circle': circle },
+			{ 'is-disabled': disabled },
+		]"
+	>
+		<i class="wx-icon-loading" v-if="loading"></i>
 		<slot></slot>
 	</button>
 </template>
-<script>
-import { defineComponent } from "vue";
-import { debounce } from "throttle-debounce";
 
+<script lang="ts">
+import { toRefs, computed, defineComponent, inject, ref } from "vue";
 export default defineComponent({
-	name: "wxButton",
-	emits: ["click"],
-	setup(props, context) {
-		const throttleFunc = debounce(180, false, () => {
-			context.emit("click");
-		});
-		const methods = {
-			handleClick() {
-				throttleFunc();
+	name: `wxButton`,
+	props: {
+		size: {
+			type: String,
+			validator(val: string): boolean {
+				return ["medium", "small", "mini", ""].includes(val);
 			},
-		};
-
-		return { ...methods };
+		},
+		type: {
+			type: String,
+			validator(val: string): boolean {
+				return ["primary", "success", "warning", "danger"].includes(val);
+			},
+		},
+		disabled: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
+		loading: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
+		circle: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
 	},
+	setup(props: any, { emit }) {},
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/components/wx/button/src/wxButton.scss";
 </style>

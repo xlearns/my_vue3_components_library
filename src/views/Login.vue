@@ -12,22 +12,30 @@
 		</wx-table>
 		<wx-progress :type="otype" :cur="cur"></wx-progress>
 		<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
-		<wx-form :rules="fieldRules" :model="formData" ref="form">
-			<wx-form-item label="名称" prop="name">
-				<wx-input v-model="formData.name" />
-			</wx-form-item>
-			<wx-form-item label="测试" prop="test">
-				<wx-input v-model="formData.test" />
-			</wx-form-item>
-			<wx-button @click="handleSubmit">提 交</wx-button>
-			<wx-button @click="handleReset">重 置</wx-button>
-		</wx-form>
-		<wx-loading></wx-loading>
+		<div>
+			<wx-form v-model="formData" :rules="formRules" ref="formEl">
+				<wx-form-item label="userName" prop="userName">
+					<wx-input v-model="formData.userName" placeholder="请输入用户名" />
+				</wx-form-item>
+				<wx-form-item label="password" prop="password">
+					<wx-input v-model="formData.password" placeholder="请输入密码" />
+				</wx-form-item>
+				<wx-form-item label="password2" prop="password2">
+					<wx-input v-model="formData.password2" placeholder="请再次输入密码" />
+				</wx-form-item>
+			</wx-form>
+			<wx-button size="mini" type="danger" :circle="false" :disabled="true"
+				>hello world</wx-button
+			>
+			<!-- <wx-button @click="resetForm">reset</wx-button> -->
+		</div>
+		<!-- <wx-loading to="#foot-container"></wx-loading> -->
 	</div>
 </template>
 
 <script>
 import "@/css/login.scss";
+import useStorage from "@/utils/useStorage";
 import {
 	defineComponent,
 	reactive,
@@ -79,9 +87,22 @@ export default defineComponent({
 				},
 			],
 			formData: { name: "", test: "", option: "" },
-			loginForm: {
-				admin_name: "",
-				admin_password: "",
+			formRules: {
+				password: [
+					{ type: "required", msg: "密码不能为空" },
+					{ type: "minLength", len: 6, msg: "密码不能小于6位" },
+				],
+				password2: [
+					{ type: "required", msg: "密码2不能为空" },
+					{
+						type: "fn",
+						msg: "两次输入的密码不一致",
+						validator: (val) => {
+							return val === formValue.value.password;
+						},
+					},
+				],
+				userName: [{ type: "required", msg: "用户名不能为空" }],
 			},
 			fieldRules: {
 				name: [
@@ -125,6 +146,7 @@ export default defineComponent({
 			state.cur += 0.05;
 		}, 1000 / 60);
 		const methods = {
+			resetForm() {},
 			delClick(row) {
 				console.log(row);
 			},

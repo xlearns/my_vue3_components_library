@@ -1,61 +1,133 @@
 <template>
-	<div class="wxform">
-		<input ref="input" :type="type" v-model="value" @blur="handleBlur" />
+	<div
+		:class="{
+			['wx-form-input']: true,
+			'input-prepend': $slots.prepend,
+			'input-append': $slots.append,
+		}"
+		:style="{ width: width }"
+	>
+		<div v-if="$slots.prepend" class="prepend">
+			<slot name="prepend"></slot>
+		</div>
+		<input
+			v-bind="$attrs"
+			ref="inputEl"
+			:value="modelValue"
+			:type="inputType"
+			:class="{
+				disabled: disabled,
+				['wx-input-control']: true,
+				'has-prefix': $slots.prefix || prefixIcon,
+				[size]: size,
+			}"
+			:disabled="disabled"
+			@input="inputHandler"
+			@focus="focusHandler"
+			@blur="blurHandler"
+		/>
+		<div v-if="$slots.append" class="append"><slot name="append"></slot></div>
+		<span v-if="$slots.prefix || prefixIcon" class="prefix-icon">
+			<i v-if="prefixIcon" :class="[prefixIcon]"></i>
+			<slot name="prefix"></slot>
+		</span>
+		<span class="suffix-icon">
+			<slot name="suffix"></slot>
+			<i v-if="suffixIcon" :class="[suffixIcon]"></i>
+			<i
+				v-if="clear && modelValue"
+				class="icon-close"
+				@click.stop="clearValue"
+			></i>
+			<i
+				v-if="modelValue && showEye && type === 'password'"
+				:class="{ 'icon-eye-close': eyeShow, 'icon-eye': !eyeShow }"
+				@click.stop="eyeShow = !eyeShow"
+			></i>
+		</span>
 	</div>
 </template>
-<script>
-import {
-	defineComponent,
-	reactive,
-	toRefs,
-	getCurrentInstance,
-	watch,
-	computed,
-} from "vue";
-// import { dispatch, broadcast } from "@/components/wx/utils/emitter";
-import { useStore } from "vuex";
+<script lang="ts">
+import { ref, defineComponent, computed, watch, inject, onMounted } from "vue";
+import pType from "../../../utils/pType";
 
 export default defineComponent({
-	name: "wxInput",
+	name: `wxInput`,
+	components: {},
+	inheritAttrs: false,
 	props: {
-		modelValue: {},
-		type: { type: String, default: "text" },
+		modelValue: pType.any(),
+		disabled: pType.bool(false),
+		type: pType.string("text"),
+		clear: pType.bool(false),
+		showEye: pType.bool(false), // 密码框显示眼睛，可切换为明文密码
+		prefixIcon: pType.string(), // 前缀icon
+		suffixIcon: pType.string(), // 后缀icon
+		width: pType.string(),
+		size: pType.string(),
 	},
-	setup(props, context) {
-		const store = useStore();
-		let status = reactive({
-			currentValue: "",
-			value: props.modelValue,
+	emits: ["blur", "focus", "update:modelValue", "change"],
+	setup(props, { emit }) {
+		const inputEl = ref();
+		const eyeShow = ref(false);
+		const inputType = computed(() => {
+			if (eyeShow.value) {
+				return "text";
+			} else {
+				return props.type;
+			}
 		});
-		let { proxy } = getCurrentInstance();
-		watch(
-			() => status.value,
-			(count, prevCount) => {
-				context.emit("update:modelValue", count);
-				store.dispatch("formChange", count);
-			}
-		);
-		watch(
-			() => {
-				return store.state.wxClearAll;
-			},
-			() => {
-				status.value = "";
-			}
-		);
-		let methods = {
-			handleBlur() {
-				store.dispatch("formBlur", status.currentValue);
-			},
+		const blurHandler = (e: Event) => {
+			emit("blur", e);
+			const { value } = e.target as HTMLInputElement;
+			controlChangeEvent(value, "blur");
 		};
+		const focusHandler = (e: Event) => {
+			emit("focus", e);
+			const { value } = e.target as HTMLInputElement;
+			controlChangeEvent(value, "focus");
+		};
+		const inputHandler = (e: Event) => {
+			const { value } = e.target as HTMLInputElement;
+			emit("update:modelValue", value);
+			controlChangeEvent(value);
+		};
+		const clearValue = () => {
+			emit("update:modelValue", "");
+			emit("change", "");
+		};
+		// 通过el.value.focus()设置焦点事件
+		const focus = () => {
+			inputEl.value.focus();
+		};
+		const blur = () => {
+			inputEl.value.blur();
+		};
+		watch(
+			() => props.modelValue,
+			(v: any) => {
+				controlChangeEvent(v, "mounted");
+			}
+		);
+		// formItem
+		const controlChange: any = inject("controlChange", "");
+		const controlChangeEvent = (val: any, type?: string) => {
+			controlChange && controlChange(val, type);
+		};
+		onMounted(() => {
+			controlChangeEvent(props.modelValue, "mounted");
+		});
 		return {
-			...toRefs(status),
-			...methods,
+			inputType,
+			blurHandler,
+			focusHandler,
+			inputHandler,
+			clearValue,
+			eyeShow,
+			focus,
+			blur,
+			inputEl,
 		};
 	},
 });
 </script>
-
-<style lang="scss">
-@import "@/components/wx/form/src/input/wxInput.scss";
-</style>
