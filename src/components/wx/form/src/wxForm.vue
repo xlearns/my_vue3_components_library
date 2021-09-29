@@ -1,80 +1,97 @@
 <template>
-	<form :class="wxForm">
+	<form class="wx-form">
 		<slot></slot>
 	</form>
 </template>
-
 <script lang="ts">
-import { provide, defineComponent, reactive, toRefs, onMounted } from "vue";
-import pType from "../../utils/pType";
-import { AnyPropName } from "../../types";
+import { defineComponent, provide, toRefs, reactive, onMounted } from "vue";
 
 export default defineComponent({
-	name: `wxForm`,
+	name: "wxForm",
 	props: {
-		rules: pType.object({}),
-		showMessage: pType.bool(true),
-		modelValue: pType.object({}),
-		trigger: pType.oneOfString(["change", "blur"], "change"),
-		labelWidth: pType.string(),
-		required: pType.bool(true),
+		modelValue: {
+			type: Object,
+			default: () => {
+				return {};
+			},
+		},
+		rules: {
+			type: Object,
+			default: () => {
+				return {};
+			},
+		},
+		showMessage: {
+			type: Boolean,
+			default: true,
+		},
+		size: {
+			type: String,
+		},
+		disable: {
+			type: Boolean,
+			default: true,
+		},
 	},
-	setup(props) {
+	setup(props, { emit }) {
 		const state = reactive({
-			defaultValue: "", // 用于保存所有表单元素初始值
+			//初始化
+			value: "",
 		});
-		let formItemFields: AnyPropName = []; // 所有formItem
+		let formItemData = [];
 		provide("formProps", props);
-		provide("getFormItemFields", (formItem: any) => {
-			formItemFields.push(formItem);
+		provide("addFormItem", (formItem) => {
+			formItemData.push(formItem);
 		});
-		const setValue = (obj: AnyPropName, type?: string) => {
+		const setValue = (obj, type?) => {
 			if (type !== "reset") {
-				state.defaultValue = JSON.stringify(obj);
+				//obj变成响应式
+				state.value = JSON.stringify(obj);
 			}
+			//obj添加到modelValue中
 			Object.assign(props.modelValue, obj);
 		};
-		// 重置表单元素值
-		const resetForm = () => {
-			setValue(JSON.parse(state.defaultValue), "reset");
-			// 将所有提示清空
-			formItemFields &&
-				formItemFields.forEach((item: any) => {
+		const reset = () => {
+			setValue(JSON.parse(state.value), "reset");
+			//清楚提示
+			formItemData &&
+				formItemData.forEach((item) => {
 					item.clear();
 				});
 		};
-		const validate = (field?: string[]) => {
-			let allTips: string[] = [];
-			let validateFields = formItemFields;
-			if (field && field.length > 0) {
-				// 指定校验字段时
-				validateFields = formItemFields.filter((fi: any) => {
-					return field.indexOf(fi.prop) !== -1;
+		const validate = (item) => {
+			let stateArr = [];
+			let itemAll = formItemData;
+			if (item && item.length > 0) {
+				itemAll = formItemData.filter((mi) => {
+					return item.indexOf(mi) !== -1;
 				});
 			}
 			return new Promise((resolve, reject) => {
-				validateFields.forEach((item: any) => {
-					// console.log(item.prop)
+				if (!formItemData.length) return console.error("没有fornItem");
+				formItemData.forEach((item) => {
 					item
 						.validate()
 						.then(() => {
-							allTips.push("true");
-							returnResult(); // 通过
+							stateArr.push("true");
+							//通过
+							success();
 						})
-						.catch((res: string) => {
-							allTips.push(res);
-							returnResult();
+						.catch((res) => {
+							stateArr.push(res);
+							success();
 						});
 				});
-				const returnResult = () => {
-					if (allTips.length === validateFields.length) {
-						const tips = allTips.filter((fi) => {
-							return fi !== "true";
+				const success = () => {
+					if (stateArr.length === itemAll.length) {
+						const tips = stateArr.filter((i) => {
+							return i !== "true";
 						});
 						if (tips.length > 0) {
-							// console.log('不通过')
+							//fail
 							reject(tips);
 						} else {
+							//success
 							resolve(props.modelValue);
 						}
 					}
@@ -86,8 +103,6 @@ export default defineComponent({
 		});
 		return {
 			...toRefs(state),
-			setValue,
-			resetForm,
 			validate,
 		};
 	},

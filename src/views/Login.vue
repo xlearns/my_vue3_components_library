@@ -13,18 +13,40 @@
 		<wx-progress :type="otype" :cur="cur"></wx-progress>
 		<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
 		<div>
-			<wx-form v-model="formData" :rules="formRules" ref="formEl">
-				<wx-form-item label="userName" prop="userName">
-					<wx-input v-model="formData.userName" placeholder="请输入用户名" />
-				</wx-form-item>
-				<wx-form-item label="password" prop="password">
-					<wx-input v-model="formData.password" placeholder="请输入密码" />
-				</wx-form-item>
-				<wx-form-item label="password2" prop="password2">
-					<wx-input v-model="formData.password2" placeholder="请再次输入密码" />
+			<wx-form v-model="formData" :rules="formRules" ref="form">
+				<wx-form-item prop="name" label="name">
+					<wx-input v-model="formData.name" />
 				</wx-form-item>
 			</wx-form>
-			<wx-button size="mini" type="danger" :circle="false" :disabled="true"
+			<wx-button @click="subtest">提 交</wx-button>
+			<wx-button
+				size="medium"
+				type="danger"
+				:circle="false"
+				:disabled="false"
+				:round="true"
+				:plain="false"
+				@click="testaa"
+				>hello world</wx-button
+			>
+			<wx-button
+				size="medium"
+				type="primary"
+				:circle="false"
+				:disabled="false"
+				:round="true"
+				:plain="false"
+				@click="testaa"
+				>hello world</wx-button
+			>
+			<wx-button
+				size="medium"
+				type="danger"
+				:circle="false"
+				:disabled="false"
+				:round="true"
+				:plain="true"
+				@click="testaa"
 				>hello world</wx-button
 			>
 			<!-- <wx-button @click="resetForm">reset</wx-button> -->
@@ -53,14 +75,17 @@ import { useStore } from "vuex";
 import { login } from "@/utils/api";
 import { throttle } from "throttle-debounce";
 import performance from "@/utils/performance";
+import wxButton from "../components/wx/button/src/wxButton.vue";
+import WxFormItem from "../components/wx/form/src/item/wxFormItem.vue";
 export default defineComponent({
+	components: { wxButton, WxFormItem },
 	setup() {
 		console.log("白屏时间:", performance.blankTime);
 		const router = useRouter();
 		const store = useStore();
 		const verifyRef = ref(null);
 		const { proxy } = getCurrentInstance();
-		const form = ref(null);
+		const form = ref();
 		const state = reactive({
 			cur: 20,
 			otype: 5,
@@ -88,21 +113,7 @@ export default defineComponent({
 			],
 			formData: { name: "", test: "", option: "" },
 			formRules: {
-				password: [
-					{ type: "required", msg: "密码不能为空" },
-					{ type: "minLength", len: 6, msg: "密码不能小于6位" },
-				],
-				password2: [
-					{ type: "required", msg: "密码2不能为空" },
-					{
-						type: "fn",
-						msg: "两次输入的密码不一致",
-						validator: (val) => {
-							return val === formValue.value.password;
-						},
-					},
-				],
-				userName: [{ type: "required", msg: "用户名不能为空" }],
+				name: [{ type: "required", msg: "用户名不能为空" }],
 			},
 			fieldRules: {
 				name: [
@@ -146,6 +157,19 @@ export default defineComponent({
 			state.cur += 0.05;
 		}, 1000 / 60);
 		const methods = {
+			subtest() {
+				form.value.validate().then(
+					(item) => {
+						console.log("成功" + item);
+					},
+					(err) => {
+						console.log(err);
+					}
+				);
+			},
+			testaa(a, b) {
+				console.log(11);
+			},
 			resetForm() {},
 			delClick(row) {
 				console.log(row);
@@ -231,7 +255,7 @@ export default defineComponent({
 			},
 			handleReset() {
 				// proxy.$wxFrame.stop();
-				proxy.$refs.form.resetFields();
+				form.value.resetFields();
 			},
 		};
 		onUnmounted(() => {

@@ -185,7 +185,7 @@ export default defineComponent({
 			state.errorTips = "";
 			state.iconType = "";
 		};
-		const getFormItemFields: any = inject("addFormItem", "");
+		const getFormItemFields: any = inject("getFormItemFields", "");
 		const getAllFormItemFields = () => {
 			// 所有带校验规则的
 			if (state.rules2.length > 0 && getFormItemFields) {
