@@ -131,3 +131,6 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss" scoped>
+@import "@/components/wx/form/src/input/wxInput.scss";
+</style>

@@ -14,10 +14,20 @@
 		<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
 		<div>
 			<wx-form v-model="formData" :rules="formRules" ref="form">
-				<wx-form-item prop="name" label="name">
+				<wx-form-item prop="name" label="name123">
 					<wx-input v-model="formData.name" />
 				</wx-form-item>
+				<wx-form-item prop="address" label="address">
+					<wx-input v-model="formData.address" />
+				</wx-form-item>
+				<wx-form-item prop="age" label="age">
+					<wx-input v-model="formData.age" />
+				</wx-form-item>
 			</wx-form>
+			<div>
+				<wx-button @click="subtest">提 交</wx-button>
+				<wx-button @click="reset">重 置</wx-button>
+			</div>
 			<wx-button @click="subtest">提 交</wx-button>
 			<wx-button
 				size="medium"
@@ -55,7 +65,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import "@/css/login.scss";
 import useStorage from "@/utils/useStorage";
 import {
@@ -84,7 +94,7 @@ export default defineComponent({
 		const router = useRouter();
 		const store = useStore();
 		const verifyRef = ref(null);
-		const { proxy } = getCurrentInstance();
+		const { proxy }: any = getCurrentInstance();
 		const form = ref();
 		const state = reactive({
 			cur: 20,
@@ -111,9 +121,29 @@ export default defineComponent({
 					address: "No. 189, Grove St, Los Angeles",
 				},
 			],
-			formData: { name: "", test: "", option: "" },
+			formData: { name: "hello world", test: "", address: "", age: 18 },
 			formRules: {
 				name: [{ type: "required", msg: "用户名不能为空" }],
+				address: [{ type: "required", msg: "地址不能为空" }],
+				age: [
+					{
+						type: "fn",
+						msg: "请输入年龄",
+						validator(val: any) {
+							if (!val) {
+								state.formRules.age[0].msg = "年龄不能为空";
+								return false;
+							} else if (isNaN(Number(val))) {
+								state.formRules.age[0].msg = "年龄必须是数字";
+								return false;
+							} else if (Number(val) <= 100) {
+								state.formRules.age[0].msg = "年龄最少3位";
+								return false;
+							}
+							return true;
+						},
+					},
+				],
 			},
 			fieldRules: {
 				name: [
@@ -157,25 +187,30 @@ export default defineComponent({
 			state.cur += 0.05;
 		}, 1000 / 60);
 		const methods = {
+			reset() {
+				// console.log(form);
+				form.value.reset();
+			},
 			subtest() {
 				form.value.validate().then(
-					(item) => {
-						console.log("成功" + item);
+					(item: any) => {
+						console.log("成功");
 					},
-					(err) => {
-						console.log(err);
+					(err: any) => {
+						// console.log(err);
 					}
 				);
 			},
-			testaa(a, b) {
+			testaa(a: any, b: any) {
 				console.log(11);
 			},
 			resetForm() {},
-			delClick(row) {
+			delClick(row: any) {
 				console.log(row);
 			},
 			login() {
-				form.value.validate((valid) => {
+				return;
+				form.value.validate((valid: any) => {
 					if (valid) {
 						if (state.verify === "") {
 							ElMessage.warning("请输入验证码");
@@ -221,7 +256,7 @@ export default defineComponent({
 					}
 				});
 			},
-			reset() {
+			reset123() {
 				state.loginForm.admin_name = "";
 				state.loginForm.admin_password = "";
 				state.verify = "";

@@ -104,6 +104,7 @@ export default defineComponent({
 		return {
 			...toRefs(state),
 			validate,
+			reset,
 		};
 	},
 });

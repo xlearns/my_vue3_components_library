@@ -43,35 +43,89 @@ import {
 	inject,
 	onMounted,
 } from "vue";
-import pType from "../../../utils/pType";
-import { AnyPropName } from "../../../types";
 
 export default defineComponent({
 	name: `wxFormItem`,
 	props: {
-		className: pType.string(),
-		label: pType.string(),
-		labelVisible: pType.bool(false),
-		prop: pType.string(),
-		required: pType.bool(true),
-		verify: pType.string(), // 用于快速验证，formItem带验证规则时，使用默认提示
-		rules: pType.array<AnyPropName>([]),
-		showMessage: pType.bool(true),
-		trigger: pType.oneOfString(["change", "blur"], "change"),
-		labelWidth: pType.string(),
+		className: {
+			type: String,
+			default: () => {
+				return "";
+			},
+		},
+		label: {
+			type: String,
+			default: () => {
+				return "";
+			},
+		},
+		labelVisible: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
+		prop: {
+			type: String,
+			default: () => {
+				return "";
+			},
+		},
+		required: {
+			type: Boolean,
+			default: () => {
+				return true;
+			},
+		},
+		verify: {
+			type: String,
+			default: () => {
+				return "";
+			},
+		},
+		// 用于快速验证，formItem带验证规则时，使用默认提示
+		rules: {
+			type: Array,
+			default: function () {
+				return [];
+			},
+		},
+		showMessage: {
+			type: Boolean,
+			default: () => {
+				return true;
+			},
+		},
+		trigger: {
+			validator: function (value: string) {
+				return ["change", "blur"].indexOf(value) !== -1;
+			},
+			default: () => {
+				return "change";
+			},
+		},
+		labelWidth: {
+			type: String,
+			default: () => {
+				return "";
+			},
+		},
 	},
-	setup(props) {
-		const formProps: AnyPropName = inject("formProps", {});
+	setup(props: any) {
+		const formProps: any = inject("formProps", {});
 		let formRules;
+		// 取出rules
 		if (formProps && formProps.rules && formProps.rules[props.prop]) {
 			formRules = formProps.rules[props.prop];
 		}
 		let rules = [...props.rules];
+		// rules不存在的时候，使用form上面的rules
 		if (props.rules.length === 0 && !props.verify && formRules) {
 			// 使用form的，formItem没有设置时使用form
 			rules = [...formRules];
 		}
-		// 优先使用参数2的设置
+
+		// 当参数1为空的时候，使用参数2的设置
 		const getFormProps = (formItem: any, form: any) => {
 			if (form !== undefined) {
 				return form;
@@ -83,7 +137,7 @@ export default defineComponent({
 			prefixCls: "wx",
 			errorTips: "", // 有值时表示校验没通过有错误信息
 			iconType: "", // 提示类型，
-			rules2: rules,
+			rules2: rules, //将rules赋值给rules2
 			trigger2: getFormProps(props.trigger, formProps.trigger),
 			messageShow: getFormProps(props.showMessage, formProps.showMessage), // 优先使用form的
 			controlValue: "", // 组件的值，改变事件时*/
@@ -107,10 +161,13 @@ export default defineComponent({
 				});
 			});
 		}
+
 		const isRequired = computed(() => {
 			let bool = false;
 			const required = getFormProps(props.required, formProps.required);
+			//当rulse2也就是rules存在的时候执行
 			if (required && state.rules2 && state.rules2.length > 0) {
+				//rules不为一个的时候
 				state.rules2.forEach((item) => {
 					if (item.type === "required") {
 						bool = true;
@@ -128,6 +185,7 @@ export default defineComponent({
 			}
 			return bool;
 		});
+
 		// 如果form组件设置了label的宽
 		const labelStyle = computed(() => {
 			const width = getFormProps(formProps.labelWidth, props.labelWidth);
@@ -151,12 +209,13 @@ export default defineComponent({
 					if (result === true) {
 						// 通过
 						state.errorTips = "";
-						state.iconType = "icon-success";
+						state.iconType = "iconfont icon-chenggong";
 						resolve(state.controlValue);
 						// console.log('通过')
 					} else {
 						state.errorTips = result;
-						state.iconType = "icon-failure";
+						// state.iconType = "icon-failure";
+						state.iconType = "iconfont icon-shibai";
 						reject(state.errorTips);
 						// console.log('不通过')
 					}
@@ -213,7 +272,8 @@ export default defineComponent({
 				}
 			} else {
 				validate(val).catch((res) => {
-					console.log(res);
+					//失败
+					// console.log(res);
 				});
 			}
 		});
@@ -230,3 +290,6 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss" scoped>
+@import "@/components/wx/form/src/item/wxFormItem.scss";
+</style>
