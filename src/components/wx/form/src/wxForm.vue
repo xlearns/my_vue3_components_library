@@ -38,12 +38,12 @@ export default defineComponent({
 			//初始化
 			value: "",
 		});
-		let formItemData = [];
+		let formItemData: any = [];
 		provide("formProps", props);
-		provide("addFormItem", (formItem) => {
+		provide("addFormItem", (formItem: any) => {
 			formItemData.push(formItem);
 		});
-		const setValue = (obj, type?) => {
+		const setValue = (obj: any, type?: any) => {
 			if (type !== "reset") {
 				//obj变成响应式
 				state.value = JSON.stringify(obj);
@@ -55,11 +55,11 @@ export default defineComponent({
 			setValue(JSON.parse(state.value), "reset");
 			//清楚提示
 			formItemData &&
-				formItemData.forEach((item) => {
+				formItemData.forEach((item: any) => {
 					item.clear();
 				});
 		};
-		const validate = (item) => {
+		const validate = (item: any) => {
 			let stateArr = [];
 			let itemAll = formItemData;
 			if (item && item.length > 0) {

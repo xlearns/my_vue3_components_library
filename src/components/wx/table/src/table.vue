@@ -13,6 +13,7 @@
 			<slot></slot>
 		</div>
 		<table
+			border="1"
 			:class="{
 				'no-stripe': !stripe,
 				'no-border': !border,

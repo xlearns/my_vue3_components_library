@@ -49,22 +49,48 @@
 </template>
 <script lang="ts">
 import { ref, defineComponent, computed, watch, inject, onMounted } from "vue";
-import pType from "../../../utils/pType";
-
 export default defineComponent({
 	name: `wxInput`,
 	components: {},
 	inheritAttrs: false,
 	props: {
-		modelValue: pType.any(),
-		disabled: pType.bool(false),
-		type: pType.string("text"),
-		clear: pType.bool(false),
-		showEye: pType.bool(false), // 密码框显示眼睛，可切换为明文密码
-		prefixIcon: pType.string(), // 前缀icon
-		suffixIcon: pType.string(), // 后缀icon
-		width: pType.string(),
-		size: pType.string(),
+		modelValue: {},
+		disabled: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
+		type: {
+			type: String,
+			default: () => {
+				return "text";
+			},
+		},
+		clear: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
+		showEye: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
+		},
+		prefixIcon: {
+			type: String,
+		}, // 前缀icon
+		suffixIcon: {
+			type: String,
+		}, // 后缀icon
+		width: {
+			type: String,
+		},
+		size: {
+			type: String,
+		},
 	},
 	emits: ["blur", "focus", "update:modelValue", "change"],
 	setup(props, { emit }) {

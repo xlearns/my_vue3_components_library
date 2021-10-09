@@ -271,9 +271,10 @@ export default defineComponent({
 					});
 				}
 			} else {
+				//update
 				validate(val).catch((res) => {
 					//失败
-					// console.log(res);
+					console.log(res);
 				});
 			}
 		});

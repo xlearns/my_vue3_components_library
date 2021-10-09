@@ -45,3 +45,6 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss" scoped>
+@import "@/components/wx/table/src/column.scss";
+</style>

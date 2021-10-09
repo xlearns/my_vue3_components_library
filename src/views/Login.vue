@@ -6,7 +6,7 @@
 			<wx-column label="省份" prop="address" />
 			<wx-column label="操作">
 				<template #default="scope">
-					<button @click="delClick(scope)">删除</button>
+					<wx-button @click="delClick(scope)">删除</wx-button>
 				</template>
 			</wx-column>
 		</wx-table>
@@ -26,7 +26,7 @@
 			</wx-form>
 			<div>
 				<wx-button @click="subtest">提 交</wx-button>
-				<wx-button @click="reset">重 置</wx-button>
+				<wx-button @click="reset" type="danger">重 置</wx-button>
 			</div>
 			<wx-button @click="subtest">提 交</wx-button>
 			<wx-button
@@ -194,10 +194,11 @@ export default defineComponent({
 			subtest() {
 				form.value.validate().then(
 					(item: any) => {
-						console.log("成功");
+						proxy.$wxMessage.success("成功");
 					},
 					(err: any) => {
-						// console.log(err);
+						console.log(proxy);
+						proxy.$wxMessage.error("失败");
 					}
 				);
 			},
@@ -206,7 +207,8 @@ export default defineComponent({
 			},
 			resetForm() {},
 			delClick(row: any) {
-				console.log(row);
+				let { index } = row;
+				state.data.splice(index, 1);
 			},
 			login() {
 				return;

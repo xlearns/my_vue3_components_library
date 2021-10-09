@@ -1,3 +1,21 @@
 .wxTable{
-  
+  table{
+    
+    table-layout: fixed;
+    word-wrap: break-word;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+    tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+      th{
+        margin: 0;
+        padding: 0;
+        line-height: 18px;
+        font-weight: 400;
+      }
+    }
+  }
 }
