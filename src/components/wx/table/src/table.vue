@@ -12,54 +12,35 @@
 		<div style="display: none">
 			<slot></slot>
 		</div>
-		<table
-			border="1"
-			:class="{
-				'no-stripe': !stripe,
-				'no-border': !border,
-				'no-hover': !hover,
-				'no-ellipsis': !ellipsis,
-				[className]: className,
-			}"
-		>
-			<colgroup>
-				<col
-					v-for="(col, index) in colWidth"
-					:key="index"
-					:width="col"
-					:class="`column${index}`"
-				/>
-			</colgroup>
-			<table-head
-				ref="tableHeadEl"
-				:drag="drag"
-				:title="title"
-				:sort-single="sortSingle"
-				:show-header="showHeader"
-				:select-checked="selectChecked"
-				:head-max-layer="headMaxLayer"
-				@event="tableHeadEvent"
-			/>
-			<tbody v-if="data.length === 0">
-				<tr>
-					<td :colspan="columnsData.length" class="empty">
-						{{ emptyText }}
-					</td>
-				</tr>
-			</tbody>
-			<table-body
-				v-else
-				:data="data"
-				:row-col-span="rowColSpan"
-				:has-child="hasChild"
-				:lazy-load="lazyLoad"
-				:extend-toggle="extendToggle"
-				:title="title"
-				:selected-rows="selectedRows"
-				@rowClick="rowClick"
-				@cellClick="cellClick"
-			/>
-		</table>
+		<table-head
+			ref="tableHeadEl"
+			:drag="drag"
+			:title="title"
+			:sort-single="sortSingle"
+			:show-header="showHeader"
+			:select-checked="selectChecked"
+			:head-max-layer="headMaxLayer"
+			@event="tableHeadEvent"
+		/>
+		<div v-if="data.length === 0">
+			<div>
+				<div :colspan="columnsData.length" class="empty">
+					{{ emptyText }}
+				</div>
+			</div>
+		</div>
+		<table-body
+			v-else
+			:data="data"
+			:row-col-span="rowColSpan"
+			:has-child="hasChild"
+			:lazy-load="lazyLoad"
+			:extend-toggle="extendToggle"
+			:title="title"
+			:selected-rows="selectedRows"
+			@rowClick="rowClick"
+			@cellClick="cellClick"
+		/>
 		<div
 			v-if="dragLine && drag && dragHead.mouseDown"
 			class="table-drag-1line"
@@ -259,7 +240,9 @@ export default defineComponent({
 			//      console.log(th)
 			state.colWidth = [];
 			th.forEach((item: HTMLElement) => {
-				state.colWidth.push(item.offsetWidth + "px");
+				if (item.offsetWidth) {
+					state.colWidth.push(item.offsetWidth + "px");
+				}
 			});
 		};
 		const mouseDown = (obj: AnyPropName) => {
@@ -395,6 +378,8 @@ export default defineComponent({
 			const tableWidth = el.value.querySelector("table").offsetWidth;
 			// 可移动的最大宽
 			// div可见宽
+			console.log(123, tableWidth);
+			if (!tableWidth) return;
 			let moveMaxWidth = scrollLeft - (tableWidth - el.value.clientWidth);
 			if (fixedRight.length > 0) {
 				for (let i = 0, len = fixedRight.length; i < len; i++) {

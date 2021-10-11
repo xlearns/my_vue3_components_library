@@ -18,6 +18,12 @@ export default defineComponent({
 		colspan: pType.number(), // 扩展列时才有传
 		rowColSpan: pType.func(),
 		rowspanColspanList: pType.array([]),
+		olength: {
+			type: Number,
+			default: () => {
+				return;
+			},
+		},
 	},
 	emits: ["cellClick", "toggleExtend"],
 	setup(props, { emit }) {
@@ -143,12 +149,16 @@ export default defineComponent({
 		if (!display) {
 			return () => [
 				h(
-					"td",
+					"div",
 					{
 						class: classNameTd.value,
 						rowspan: rowspan > 1 ? rowspan : null,
 						colspan: colspan > 1 ? colspan : null,
-						style: "text-align:" + props.column.align,
+						style: [
+							"text-align:" + props.column.align,
+							`width:${100 / props.olength}%`,
+						],
+						// style: "text-align:" + props.column.align,
 						title: hoverTitle.value,
 						onClick: onCellClick,
 					},

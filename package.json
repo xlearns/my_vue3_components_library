@@ -16,6 +16,7 @@
     "vue": "^3.2.6",
     "vue-router": "^4.0.0-0",
     "vue3-mindmap": "^0.5.8",
+    "vuedraggable": "^2.24.3",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

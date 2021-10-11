@@ -61,6 +61,12 @@
 			>
 			<!-- <wx-button @click="resetForm">reset</wx-button> -->
 		</div>
+		<wx-row>
+			<wx-col :span="6"><div style="background: red">123</div></wx-col>
+			<wx-col :span="6"><div style="background: red">123</div></wx-col>
+			<wx-col :span="6"><div style="background: red">123</div></wx-col>
+			<wx-col :span="6"><div style="background: red">123</div></wx-col>
+		</wx-row>
 		<!-- <wx-loading to="#foot-container"></wx-loading> -->
 	</div>
 </template>

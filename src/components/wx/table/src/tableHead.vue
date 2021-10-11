@@ -1,11 +1,14 @@
 <template>
-	<thead v-if="showHeader" ref="el">
-		<tr v-for="thLayer in headMaxLayer" :key="thLayer" :class="{ drag: drag }">
-			<th
+	<div v-if="showHeader" ref="el">
+		<div v-for="thLayer in headMaxLayer" :key="thLayer" :class="{ drag: drag }">
+			<div
 				v-for="(th, thIndex) in getColumnsFilter(thLayer)"
 				:key="thIndex"
 				:class="[th.fixed, th.className]"
-				:style="{ textAlign: th.align }"
+				:style="{
+					width: `${100 / getColumnsFilter(thLayer).length}%`,
+					textAlign: 'center',
+				}"
 				:title="getShowHoverTitle(th)"
 				:colspan="th.colspan"
 				:rowspan="th.rowspan"
@@ -38,9 +41,9 @@
 					class="drag-line"
 					@mousedown="headMouseDown($event, thIndex)"
 				></a>
-			</th>
-		</tr>
-	</thead>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -147,3 +150,6 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss" scoped>
+@import "@/components/wx/table/src/tableHead.scss";
+</style>

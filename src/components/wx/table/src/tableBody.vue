@@ -1,10 +1,15 @@
 <template>
-	<tbody>
+	<div class="tableBody">
 		<template v-for="(row, rowIndex) in dataList" :key="rowIndex">
-			<tr
+			<div
 				:class="{
 					warning: selectedRows.indexOf(row) !== -1,
 					[row.trClass]: row.trClass,
+				}"
+				:style="{
+					display: 'flex',
+					textAlign: 'center',
+					alignItems: 'center',
 				}"
 				@click="rowClick(row, rowIndex)"
 			>
@@ -20,25 +25,26 @@
 					:toggle="getToggle(rowIndex)"
 					:row-col-span="rowColSpan"
 					:rowspan-colspan-list="rowspanColspanList"
+					:olength="Object.keys(colsNoExtend).length"
 					@toggle-extend="toggleExtend(rowIndex, row)"
 					@cellClick="cellClick"
 				/>
-			</tr>
-			<tr
+			</div>
+			<div
 				v-if="getToggle(rowIndex) && colsExtend.length > 0"
 				:key="'tr' + rowIndex"
 				class="extend"
 				:class="{ warning: selectedRows.indexOf(row) !== -1 }"
 			>
-				<TableTd
+				<tableTd
 					:column="colsExtend[0]"
 					:row="row"
 					:index="rowIndex"
 					:colspan="colsNoExtend.length"
 				/>
-			</tr>
+			</div>
 			<template v-if="hasChild">
-				<tr
+				<div
 					v-for="(item, index) in row.children"
 					v-show="getToggle(rowIndex)"
 					:key="'child' + index"
@@ -57,10 +63,10 @@
 						:parent-row="row"
 						@cellClick="cellClick"
 					/>
-				</tr>
+				</div>
 			</template>
 		</template>
-	</tbody>
+	</div>
 </template>
 
 <script lang="ts">
@@ -149,3 +155,6 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss" scoped>
+@import "@/components/wx/table/src/tableBody.scss";
+</style>
