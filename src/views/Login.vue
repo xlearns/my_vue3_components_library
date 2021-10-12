@@ -68,6 +68,21 @@
 			<wx-col :span="6"><div style="background: red">123</div></wx-col>
 		</wx-row>
 		<!-- <wx-loading to="#foot-container"></wx-loading> -->
+		<wxDialog :visible="ot" title="测试">
+			<WxFormItem label="名字">
+				<wx-input />
+			</WxFormItem>
+			<WxFormItem label="年龄">
+				<wx-input />
+			</WxFormItem>
+			<WxFormItem label="地址">
+				<wx-input />
+			</WxFormItem>
+			<div style="text-align: right">
+				<wxButton type="success" @click="ot = !ot">提 交</wxButton>
+				<wxButton type="danger">重 置</wxButton>
+			</div>
+		</wxDialog>
 	</div>
 </template>
 
@@ -103,8 +118,9 @@ export default defineComponent({
 		const { proxy }: any = getCurrentInstance();
 		const form = ref();
 		const state = reactive({
+			ot: true,
 			cur: 20,
-			otype: 5,
+			otype: 1,
 			data: [
 				{
 					date: "2016-05-03",

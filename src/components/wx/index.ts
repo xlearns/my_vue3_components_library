@@ -9,6 +9,7 @@ import wxLoading from "./loading/index";
 import {wxCheckbox, wxCheckboxGroup} from './checkbox'
 import {wxTable, wxTableHead,wxTableBody,wxTableTd,wxColumn} from './table/index'
 import {wxCol, wxRow} from './layout/index'
+import wxDialog from "./dialog/index";
 const components = [
   wxForm,
   wxFormItem,
@@ -25,7 +26,8 @@ const components = [
   wxTableTd,
   wxColumn,
   wxCol,
-  wxRow
+  wxRow,
+  wxDialog
 ]
 const install = function(Vue:any,opts={}){
   components.forEach((component:any)=>{
