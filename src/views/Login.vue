@@ -68,7 +68,13 @@
 			<wx-col :span="6"><div style="background: red">123</div></wx-col>
 		</wx-row>
 		<!-- <wx-loading to="#foot-container"></wx-loading> -->
-		<wxDialog :visible="ot" title="测试">
+		<wxDialog
+			v-model="ot"
+			title="测试"
+			width="90%"
+			:beforeClose="bc"
+			:auto-close="10"
+		>
 			<WxFormItem label="名字">
 				<wx-input />
 			</WxFormItem>
@@ -78,10 +84,10 @@
 			<WxFormItem label="地址">
 				<wx-input />
 			</WxFormItem>
-			<div style="text-align: right">
-				<wxButton type="success" @click="ot = !ot">提 交</wxButton>
-				<wxButton type="danger">重 置</wxButton>
-			</div>
+			<template #footer>
+				<wxButton type="success" @click="ot = !ot">submit</wxButton>
+				<wxButton type="danger">reset</wxButton>
+			</template>
 		</wxDialog>
 	</div>
 </template>
@@ -209,6 +215,9 @@ export default defineComponent({
 			state.cur += 0.05;
 		}, 1000 / 60);
 		const methods = {
+			bc() {
+				console.log(1);
+			},
 			reset() {
 				// console.log(form);
 				form.value.reset();

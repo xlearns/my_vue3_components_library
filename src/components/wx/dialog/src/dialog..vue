@@ -1,6 +1,10 @@
 <template>
 	<transition name="dialog-fade">
-		<div class="wx-dialog_wrapper" v-show="visible" @click.self="handleClose">
+		<div
+			class="wx-dialog_wrapper"
+			v-show="modelValue"
+			@click.self="handleClose"
+		>
 			<div class="wx-dialog" :style="{ width: width, marginTop: top }">
 				<div class="wx-dialog_header">
 					<slot name="title">
@@ -10,16 +14,13 @@
 						</span>
 					</slot>
 					<button class="wx-dialog_headerbtn" @click="handleClose">
-						<i class="wx-icon-close"></i>
+						<i class="wx-icon-close iconfont icon-guanbi"></i>
 					</button>
 				</div>
 				<div class="wx-dialog_body">
-					<!-- 内容可能是除span以外的其他内容，比如列表等，所以在这里使用插槽，并且不规定插槽内具体的标签 -->
-					<!-- 并且在这里使用匿名插槽，使用匿名插槽的好处就是不用指定名称，这样在不使用<template v-slot>指定插槽内容的时候，也可以自定义内容 -->
 					<slot></slot>
 				</div>
 				<div class="wx-dialog_footer">
-					<!-- 如果footer不传递内容，则不显示footer -->
 					<slot name="footer" v-if="$slots.footer"> </slot>
 				</div>
 			</div>
@@ -31,6 +32,18 @@ import { defineComponent, reactive, toRefs } from "vue";
 export default defineComponent({
 	name: "wxDialog",
 	props: {
+		autoClose: {
+			type: Function,
+			default: () => {
+				return;
+			},
+		},
+		callback: {
+			type: Function,
+			default: () => {
+				return;
+			},
+		},
 		title: {
 			type: String,
 			default: () => {
@@ -52,20 +65,40 @@ export default defineComponent({
 		footer: {
 			type: Object,
 		},
-		visible: {
+		beforeClose: {
+			type: Function,
+			default: () => {
+				return;
+			},
+		},
+		modelValue: {
 			type: Boolean,
 			default: () => {
 				return false;
 			},
 		},
 	},
-	setup() {
+	setup(props, { emit }) {
 		const state = reactive({
-			show: false,
+			autoTime: props.autoClose,
 		});
+		let clearTime;
+		const autoClose = function () {
+			state.autoTime = props.autoClose;
+			clearTime = setInterval(() => {
+				if (state.autoTime > 1) {
+					state.autoTime--;
+				} else {
+					props.callback && props.callback();
+					close();
+				}
+			}, 1000);
+		};
+
 		const methods = {
 			handleClose() {
-				this.$emit("update:visible", false);
+				props.beforeClose && props.beforeClose();
+				emit("update:modelValue", false);
 			},
 		};
 		return {
@@ -91,7 +124,7 @@ export default defineComponent({
 		position: relative;
 		margin: 15vh auto 50px;
 		background: #fff;
-		border-radius: 2px;
+		border-radius: 10px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 		box-sizing: border-box;
 		width: 30%;
