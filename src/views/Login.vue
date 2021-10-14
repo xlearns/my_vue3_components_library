@@ -89,6 +89,7 @@
 				<wxButton type="danger">reset</wxButton>
 			</template>
 		</wxDialog>
+		<wx-captcha></wx-captcha>
 	</div>
 </template>
 

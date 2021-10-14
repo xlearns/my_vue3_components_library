@@ -10,8 +10,11 @@ import {wxCheckbox, wxCheckboxGroup} from './checkbox'
 import {wxTable, wxTableHead,wxTableBody,wxTableTd,wxColumn} from './table/index'
 import {wxCol, wxRow} from './layout/index'
 import wxDialog from "./dialog/index";
+import wxLogin from "./login/";
+import wxCaptcha from './captcha'
 const components = [
   wxForm,
+  wxCaptcha,
   wxFormItem,
   wxInput,
   wxButton,
@@ -27,7 +30,8 @@ const components = [
   wxColumn,
   wxCol,
   wxRow,
-  wxDialog
+  wxDialog,
+  wxLogin
 ]
 const install = function(Vue:any,opts={}){
   components.forEach((component:any)=>{

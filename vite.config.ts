@@ -1,9 +1,10 @@
 import { VITE_SERVER_IP } from './src/utils/config'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(),vueJsx()],
   server:{
     host:'127.0.0.1',
     port:8081,
