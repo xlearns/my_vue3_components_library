@@ -1,65 +1,77 @@
 <template>
-	<!-- <div ref="dragVerify"></div> -->
-	<div class="drag-verify-container">
-		<div :style="dragVerifyImgStyle">
-			<img
-				ref="checkImg"
-				crossOrigin="anonymous"
-				:src="imgsrc"
-				@load="checkimgLoaded"
-				style="width: 100%"
-				alt=""
-			/>
-			<canvas ref="maincanvas" class="main-canvas"></canvas>
-			<canvas
-				ref="movecanvas"
-				:class="{ goFirst: isOk, goKeep: isKeep }"
-				class="move-canvas"
-			></canvas>
-			<div class="refresh" v-if="showRefresh && !isPassing">
-				<i :class="refreshIcon" @click="refreshimg"></i>
+	<div class="wx-captcha">
+		<div class="drag-verify-container">
+			<div :style="dragVerifyImgStyle">
+				<img
+					ref="checkImg"
+					crossOrigin="anonymous"
+					:src="imgsrc"
+					@load="checkimgLoaded"
+					style="width: 100%"
+					alt=""
+				/>
+				<canvas ref="maincanvas" class="main-canvas"></canvas>
+				<canvas
+					ref="movecanvas"
+					:class="{ goFirst: isOk, goKeep: isKeep }"
+					class="move-canvas"
+				></canvas>
+				<div class="refresh" v-if="showRefresh && !modelValue">
+					<i :class="refreshIcon" @click="refreshimg"></i>
+				</div>
+				<div class="tips success" v-if="showTips && modelValue">
+					{{ successTip }}
+				</div>
+				<div class="tips danger" v-if="showTips && !modelValue && showErrorTip">
+					{{ failTip }}
+				</div>
 			</div>
-			<div class="tips success" v-if="showTips && isPassing">
-				{{ successTip }}
-			</div>
-			<div class="tips danger" v-if="showTips && !isPassing && showErrorTip">
-				{{ failTip }}
-			</div>
-		</div>
-		<div
-			ref="dragVerify"
-			class="drag_verify"
-			:style="dragVerifyStyle"
-			@mousemove="dragMoving"
-			@mouseup="dragFinish"
-			@mouseleave="dragFinish"
-			@touchmove="dragMoving"
-			@touchend="dragFinish"
-		>
 			<div
-				class="dv_progress_bar"
-				:class="{ goFirst2: isOk }"
-				ref="progressBar"
-				:style="progressBarStyle"
+				ref="dragVerify"
+				class="drag_verify"
+				:style="dragVerifyStyle"
+				@mousemove="dragMoving"
+				@mouseup="dragFinish"
+				@mouseleave="dragFinish"
+				@touchmove="dragMoving"
+				@touchend="dragFinish"
 			>
-				{{ successMessage }}
-			</div>
-			<div class="dv_text" :style="textStyle" ref="message">
-				{{ message }}
-			</div>
+				<div
+					class="dv_progress_bar"
+					:class="{ goFirst2: isOk }"
+					ref="progressBar"
+					:style="progressBarStyle"
+				>
+					{{ successMessage }}
+				</div>
+				<div class="dv_text" :style="textStyle" ref="messageDom">
+					{{ message }}
+				</div>
 
-			<div
-				class="dv_handler dv_handler_bg"
-				:class="{ goFirst: isOk }"
-				@mousedown="dragStart"
-				@touchstart="dragStart"
-				ref="handler"
-				:style="handlerStyle"
-			>
-				<i :class="handlerIcon"></i>
+				<div
+					class="dv_handler dv_handler_bg"
+					:class="{ goFirst: isOk }"
+					@mousedown="dragStart"
+					@touchstart="dragStart"
+					ref="handler"
+					:style="handlerStyle"
+				>
+					<i :class="handlerIcon"></i>
+				</div>
 			</div>
+			<div class="triangle"></div>
 		</div>
 	</div>
+	<!-- <div v-else class="mi-captcha-radar" :class="[{ isplain: plain }]">
+		<div class="mi-captcha-radar-ready">
+			<div class="mi-captcha-radar-ring"></div>
+			<div class="mi-captcha-radar-dot"></div>
+		</div>
+		<div class="mi-captcha-radar-tip">点击按钮进行验证</div>
+		<div class="mi-captcha-radar-logo" v-if="logo">
+			<img :src="logo" alt="" />
+		</div>
+	</div> -->
 </template>
 <script lang="ts">
 import {
@@ -74,81 +86,137 @@ import {
 export default defineComponent({
 	name: "wxCaptcha",
 	props: {
-		isPassing: {
+		logo: {
+			type: String,
+			default: () => {
+				return;
+			},
+		},
+		plain: {
 			type: Boolean,
-			default: false,
+			default: () => {
+				return false;
+			},
+		},
+		modelValue: {
+			type: Boolean,
+			default: () => {
+				return false;
+			},
 		},
 		width: {
 			type: Number,
-			default: 250,
+			default: () => {
+				return 250;
+			},
 		},
 		height: {
 			type: Number,
-			default: 40,
+			default: () => {
+				return 40;
+			},
 		},
 		text: {
 			type: String,
-			default: "swiping to the right side",
+			default: () => {
+				return "请按住滑块拖动";
+			},
 		},
 		successText: {
 			type: String,
-			default: "success",
+			default: () => {
+				return "验证通过";
+			},
 		},
 		background: {
 			type: String,
-			default: "#eee",
+			default: () => {
+				return "#eee";
+			},
 		},
 		progressBarBg: {
 			type: String,
-			default: "#76c61d",
+			default: () => {
+				return "#76c61d";
+			},
 		},
 		completedBg: {
 			type: String,
-			default: "#76c61d",
+			default: () => {
+				return "#76c61d";
+			},
 		},
 		circle: {
 			type: Boolean,
-			default: false,
+			default: () => {
+				return false;
+			},
 		},
 		radius: {
 			type: String,
-			default: "4px",
+			default: () => {
+				return "4px";
+			},
 		},
 		handlerIcon: {
 			type: String,
+			default: () => {
+				return "iconfont icon-right";
+			},
 		},
 		successIcon: {
 			type: String,
+			default: () => {
+				return "iconfont icon-chenggong";
+			},
 		},
 		handlerBg: {
 			type: String,
-			default: "#fff",
+			default: () => {
+				return "#fff";
+			},
 		},
 		textSize: {
 			type: String,
-			default: "14px",
+			default: () => {
+				return "14px";
+			},
 		},
 		textColor: {
 			type: String,
-			default: "#333",
+			default: () => {
+				return "#333";
+			},
 		},
 		imgsrc: {
 			type: String,
+			default: () => {
+				return "data:image/png;base64,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";
+			},
 		},
 		barWidth: {
 			type: Number,
-			default: 40,
+			default: () => {
+				return 40;
+			},
 		},
 		barRadius: {
 			type: Number,
-			default: 8,
+			default: () => {
+				return 8;
+			},
 		},
 		showRefresh: {
 			type: Boolean,
-			default: false,
+			default: () => {
+				return false;
+			},
 		},
 		refreshIcon: {
 			type: String,
+			default: () => {
+				return "iconfont icon-shuaxin icon_fff";
+			},
 		},
 		showTips: {
 			type: Boolean,
@@ -173,8 +241,9 @@ export default defineComponent({
 		const maincanvas = ref();
 		const movecanvas = ref();
 		const handler = ref();
+		const messageDom = ref();
 		const progressBar = ref();
-		let state = reactive({
+		const state = reactive({
 			isMoving: false,
 			x: 0,
 			isOk: false,
@@ -188,11 +257,10 @@ export default defineComponent({
 			dragEl.style.setProperty("--width", Math.floor(props.width / 2) + "px");
 			dragEl.style.setProperty("--pwidth", -Math.floor(props.width / 2) + "px");
 		};
-		const resize = function () {};
-		let methods = {
+		const methods = {
 			draw(ctx: any, x: number, y: number, operation: any) {
-				let l = props.barWidth;
-				let r = props.barRadius;
+				const l = props.barWidth;
+				const r = props.barRadius;
 				const PI = Math.PI;
 				ctx.beginPath();
 				ctx.moveTo(x, y);
@@ -211,13 +279,14 @@ export default defineComponent({
 				ctx.globalCompositeOperation = "destination-over";
 			},
 			checkimgLoaded() {
-				let barWidth = props.barWidth;
-				let imgHeight = checkImg.value.height;
-				let imgWidth = checkImg.value.width;
-				let halfWidth = Math.floor(props.width / 2);
-				let refreshHeigth = 25;
-				let tipHeight = 20;
-				let x =
+				const barWidth = props.barWidth;
+				const imgHeight = checkImg.value.height;
+				const imgWidth = checkImg.value.width;
+
+				const halfWidth = Math.floor(props.width / 2);
+				const refreshHeigth = 25;
+				const tipHeight = 20;
+				const x =
 					halfWidth +
 					Math.ceil(
 						Math.random() * (halfWidth - barWidth - props.barRadius - 5)
@@ -227,21 +296,21 @@ export default defineComponent({
 					Math.floor(
 						Math.random() * (imgHeight - barWidth - refreshHeigth - tipHeight)
 					);
-				let __maincanvas = maincanvas.value;
+				const __maincanvas = maincanvas.value;
 				__maincanvas.setAttribute("width", imgWidth);
 				__maincanvas.setAttribute("height", imgHeight);
 				__maincanvas.style.display = "block";
-				let canvasCtx = maincanvas.value.getContext("2d");
-				this.draw(canvasCtx, x, y, "fill");
+				const canvasCtx = maincanvas.value.getContext("2d");
+				methods.draw(canvasCtx, x, y, "fill");
 				state.clipBarx = x;
-				let __moveCanvas = movecanvas.value;
+				const __moveCanvas = movecanvas.value;
 				__moveCanvas.setAttribute("width", imgWidth);
 				__moveCanvas.setAttribute("height", imgHeight);
 				__moveCanvas.style.display = "block";
 				const L = barWidth + props.barRadius * 2 + 3; //实际宽度
-				let moveCtx = __moveCanvas.getContext("2d");
+				const moveCtx = __moveCanvas.getContext("2d");
 				moveCtx.clearRect(0, 0, imgWidth, imgHeight);
-				this.draw(moveCtx, x, y, "clip");
+				methods.draw(moveCtx, x, y, "clip");
 				moveCtx.drawImage(checkImg.value, 0, 0, imgWidth, imgHeight);
 				y = y - props.barRadius * 2 - 1;
 				const ImageData = moveCtx.getImageData(x, y, L, L);
@@ -250,7 +319,7 @@ export default defineComponent({
 				moveCtx.putImageData(ImageData, 0, y);
 			},
 			dragStart(e: any) {
-				if (!props.isPassing) {
+				if (!props.modelValue) {
 					state.isMoving = true;
 					state.x = e.pageX || e.touches[0].pageX;
 				}
@@ -258,24 +327,24 @@ export default defineComponent({
 				emit("handlerMove");
 			},
 			dragMoving(e: any) {
-				if (state.isMoving && !props.isPassing) {
-					let _x = (e.pageX || e.touches[0].pageX) - state.x;
-					let __handler = handler.value;
-					let __progressBar = progressBar.value;
-					let __movecanvas = movecanvas.value;
+				if (state.isMoving && !props.modelValue) {
+					const _x = (e.pageX || e.touches[0].pageX) - state.x;
+					const __handler = handler.value;
+					const __progressBar = progressBar.value;
+					const __movecanvas = movecanvas.value;
 					__handler.style.left = _x + "px";
 					__progressBar.style.width = _x + props.height / 2 + "px";
 					__movecanvas.style.left = _x + "px";
 				}
 			},
 			dragFinish(e: any) {
-				if (state.isMoving && !props.isPassing) {
-					var _x = (e.pageX || e.changedTouches[0].pageX) - this.x;
+				if (state.isMoving && !props.modelValue) {
+					const _x = (e.pageX || e.changedTouches[0].pageX) - state.x;
 					if (Math.abs(_x - state.clipBarx) > props.diffWidth) {
 						state.isOk = true;
-						let __handler = handler.value;
-						let __progressBar = progressBar.value;
-						let __movecanvas = movecanvas.value;
+						const __handler = handler.value;
+						const __progressBar = progressBar.value;
+						const __movecanvas = movecanvas.value;
 						setTimeout(function () {
 							__handler.style.left = "0";
 							__progressBar.style.width = "0";
@@ -291,20 +360,19 @@ export default defineComponent({
 				}
 			},
 			passVerify() {
-				emit("update:isPassing", true);
+				emit("update:modelValue", true);
 				state.isMoving = false;
-				let __handler = handler.value;
-				let __progressBar = progressBar.value;
-				let __message: any = message.value;
-				let __movecanvas = movecanvas.value;
-				let __maincanvas = maincanvas.value;
-
+				const __handler = handler.value;
+				const __progressBar = progressBar.value;
+				const __message = messageDom.value;
+				const __movecanvas = movecanvas.value;
+				const __maincanvas = maincanvas.value;
 				__handler.children[0].className = props.successIcon;
 				__progressBar.style.background = props.completedBg;
 				__message.style["-webkit-text-fill-color"] = "unset";
 				__message.style.animation = "slidetounlock2 3s infinite";
-				progressBar.value.style.color = "#fff";
-				progressBar.value.style.fontSize = props.textSize;
+				__progressBar.style.color = "#fff";
+				__progressBar.style.fontSize = props.textSize;
 				state.isKeep = true;
 				setTimeout(() => {
 					__movecanvas.style.left = state.clipBarx + "px";
@@ -321,22 +389,26 @@ export default defineComponent({
 				methods.checkimgLoaded();
 			},
 			reImg() {
-				emit("update:isPassing", false);
-				// const oriData = this.$options.data();
-				// for (const key in oriData) {
-				// 	if (Object.prototype.hasOwnProperty.call(oriData, key)) {
-				// 		this[key] = oriData[key];
-				// 	}
-				// }
-				// var handler = this.$refs.handler;
-				// var message = this.$refs.message;
-				// handler.style.left = "0";
-				// this.$refs.progressBar.style.width = "0";
-				// handler.children[0].className = this.handlerIcon;
-				// message.style["-webkit-text-fill-color"] = "transparent";
-				// message.style.animation = "slidetounlock 3s infinite";
-				// message.style.color = this.background;
-				// this.$refs.movecanvas.style.left = "0px";
+				emit("update:modelValue", false);
+				//重置
+				state.isMoving = false;
+				state.x = 0;
+				state.isOk = false;
+				state.isKeep = false;
+				state.clipBarx = 0;
+				state.showErrorTip = false;
+
+				const __handler = handler.value;
+				const __message: any = messageDom.value;
+				const __progressBar = progressBar.value;
+				const __movecanvas = movecanvas.value;
+				__handler.style.left = "0";
+				__progressBar.style.width = "0";
+				__handler.children[0].className = props.handlerIcon;
+				__message.style["-webkit-text-fill-color"] = "transparent";
+				__message.style.animation = "slidetounlock 3s infinite";
+				__message.style.color = props.background;
+				__movecanvas.style.left = "0px";
 			},
 			refreshimg() {
 				emit("refresh");
@@ -350,51 +422,46 @@ export default defineComponent({
 			};
 		});
 		const message = computed(() => {
-			return {
-				width: props.height + "px",
-				height: props.height + "px",
-				background: props.handlerBg,
-			};
+			return props.modelValue ? "" : props.text;
 		});
 		const successMessage = computed(() => {
-			return {
-				width: props.height + "px",
-				height: props.height + "px",
-				background: props.handlerBg,
-			};
+			return props.modelValue ? props.successText : "";
 		});
 		const dragVerifyStyle = computed(() => {
 			return {
-				width: props.height + "px",
+				width: props.width + "px",
 				height: props.height + "px",
-				background: props.handlerBg,
+				lineHeight: props.height + "px",
+				background: props.background,
+				borderRadius: props.circle ? props.height / 2 + "px" : props.radius,
 			};
 		});
 		const dragVerifyImgStyle = computed(() => {
 			return {
-				width: props.height + "px",
-				height: props.height + "px",
-				background: props.handlerBg,
+				width: props.width + "px",
+				position: "relative",
+				overflow: "hidden",
 			};
 		});
 		const progressBarStyle = computed(() => {
 			return {
-				width: props.height + "px",
+				background: props.progressBarBg,
 				height: props.height + "px",
-				background: props.handlerBg,
+				borderRadius: props.circle
+					? props.height / 2 + "px 0 0 " + props.height / 2 + "px"
+					: props.radius,
 			};
 		});
 		const textStyle = computed(() => {
 			return {
-				width: props.height + "px",
 				height: props.height + "px",
-				background: props.handlerBg,
+				width: props.width + "px",
+				fontSize: props.textSize,
 			};
 		});
 
 		onMounted(() => {
 			init();
-			window.addEventListener("resize", resize);
 		});
 		return {
 			...methods,
@@ -412,7 +479,157 @@ export default defineComponent({
 			movecanvas,
 			handler,
 			progressBar,
+			messageDom,
 		};
 	},
 });
 </script>
+
+<style lang="scss" scoped>
+.wx-captcha {
+	position: absolute;
+}
+
+.drag_verify {
+	position: relative;
+	background-color: #e8e8e8;
+	text-align: center;
+	overflow: hidden;
+	margin-top: 5px;
+}
+.drag_verify .dv_handler {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	cursor: move;
+}
+.drag_verify .dv_handler i {
+	color: #666;
+	padding-left: 0;
+	font-size: 16px;
+}
+.drag_verify .dv_handler .el-icon-circle-check {
+	color: #6c6;
+	margin-top: 9px;
+}
+.drag_verify .dv_progress_bar {
+	position: absolute;
+	height: 34px;
+	width: 0px;
+}
+.drag_verify .dv_text {
+	position: absolute;
+	top: 0px;
+	color: transparent;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	-o-user-select: none;
+	-ms-user-select: none;
+	background: -webkit-gradient(
+		linear,
+		left top,
+		right top,
+		color-stop(0, var(--textColor)),
+		color-stop(0.4, var(--textColor)),
+		color-stop(0.5, #fff),
+		color-stop(0.6, var(--textColor)),
+		color-stop(1, var(--textColor))
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-size-adjust: none;
+	animation: slidetounlock 3s infinite;
+}
+.drag_verify .dv_text * {
+	-webkit-text-fill-color: var(--textColor);
+}
+.goFirst {
+	left: 0px !important;
+	transition: left 0.5s;
+}
+.goKeep {
+	transition: left 0.2s;
+}
+.goFirst2 {
+	width: 0px !important;
+	transition: width 0.5s;
+}
+.drag-verify-container {
+	position: absolute;
+	line-height: 0;
+	z-index: 10000;
+	border: 1px solid #999;
+	padding: 5px;
+	background: #999;
+	border-radius: 10px;
+}
+.refresh {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+	line-height: 1;
+	font-size: 20px;
+	z-index: 200;
+	.icon_fff {
+		color: #fff;
+	}
+}
+.tips {
+	position: absolute;
+	bottom: 0;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	width: 100%;
+	font-size: 12px;
+	z-index: 200;
+}
+.tips.success {
+	background: rgba(255, 255, 255, 0.6);
+	color: green;
+}
+.tips.danger {
+	background: rgba(0, 0, 0, 0.6);
+	color: yellow;
+}
+.main-canvas {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.move-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.triangle {
+	position: absolute;
+	border-style: solid;
+	border-width: 0.625rem;
+	border-color: transparent #999 transparent transparent;
+	z-index: 1;
+	top: 50%;
+	transform: translateY(-50%);
+	left: -21px;
+}
+@-webkit-keyframes slidetounlock {
+	0% {
+		background-position: var(--pwidth) 0;
+	}
+	100% {
+		background-position: var(--width) 0;
+	}
+}
+@-webkit-keyframes slidetounlock2 {
+	0% {
+		background-position: var(--pwidth) 0;
+	}
+	100% {
+		background-position: var(--pwidth) 0;
+	}
+}
+</style>
