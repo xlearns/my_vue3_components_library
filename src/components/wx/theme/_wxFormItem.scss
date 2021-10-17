@@ -1,34 +1,40 @@
-@import '@/components/wx/theme/color';
-
-.wx-form-item{
+.wx-form-item {
   margin-bottom: 15px;
   line-height: 40px;
   position: relative;
   display: flex;
-  .wx-form-label{
+  .wx-form-label {
     display: inline-block;
     text-align: right;
     font-size: 14px;
     color: $gery;
     padding: 0 10px 0 0;
     box-sizing: border-box;
-    width: 90px;display: flex; 
+    width: 90px;
+    display: flex;
     align-items: center;
     &.required {
-      &:before {content: '*';color:$red;display: inline-block;vertical-align: middle;}
+      &:before {
+        content: "*";
+        color: $red;
+        display: inline-block;
+        vertical-align: middle;
+      }
     }
   }
-  .wx-form-box{
+  .wx-form-box {
     position: relative;
     display: flex;
     align-items: center;
   }
-  .wx-form-tips{
+  .wx-form-tips {
     color: $red;
     margin: 0 5px;
-    &.icon-chenggong {color: $primary}
-    &.icon-tips {color: $gery_999}
+    &.icon-chenggong {
+      color: $primary;
+    }
+    &.icon-tips {
+      color: $gery_999;
+    }
   }
-  
 }
-

@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "iconfont"; 
-  src: url('iconfont.ttf') format('truetype');
+  font-family: "iconfont"; /* Project id 2853337 */
+  src: url("iconfont.ttf") format("truetype");
 }
 
 .iconfont {
@@ -11,8 +11,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-right:before {
+  content: "\e609";
+}
+
+.icon-loading:before {
+  content: "\e608";
+}
+
 .icon-guanbi:before {
-  content: "\f01f1";
+  content: "\e600";
 }
 
 .icon-anniu_guanbi:before {
@@ -166,4 +174,3 @@
 .icon-zhiwen:before {
   content: "\e8cf";
 }
-

@@ -6,12 +6,19 @@ import wxFrame from "./frame/index";
 import wxButton from "./button/index";
 import wxProcess from "./progress/index";
 import wxLoading from "./loading/index";
-import {wxCheckbox, wxCheckboxGroup} from './checkbox'
-import {wxTable, wxTableHead,wxTableBody,wxTableTd,wxColumn} from './table/index'
-import {wxCol, wxRow} from './layout/index'
+import { wxCheckbox, wxCheckboxGroup } from "./checkbox";
+import {
+  wxTable,
+  wxTableHead,
+  wxTableBody,
+  wxTableTd,
+  wxColumn,
+} from "./table/index";
+import { wxCol, wxRow } from "./layout/index";
 import wxDialog from "./dialog/index";
 import wxLogin from "./login/";
-import wxCaptcha from './captcha'
+import wxCaptcha from "./captcha";
+import "./theme/index.scss";
 const components = [
   wxForm,
   wxCaptcha,
@@ -23,7 +30,7 @@ const components = [
   wxTable,
   wxCheckbox,
   wxCheckboxGroup,
-  wxTable, 
+  wxTable,
   wxTableHead,
   wxTableBody,
   wxTableTd,
@@ -31,16 +38,16 @@ const components = [
   wxCol,
   wxRow,
   wxDialog,
-  wxLogin
-]
-const install = function(Vue:any,opts={}){
-  components.forEach((component:any)=>{
-      Vue.component(component.name,component)
-  })
+  wxLogin,
+];
+const install = function (Vue: any, opts = {}) {
+  components.forEach((component: any) => {
+    Vue.component(component.name, component);
+  });
   Vue.config.globalProperties.$wxMessage = wxMessage;
   Vue.config.globalProperties.$wxFrame = wxFrame(Vue);
-}
+};
 export default {
   ...components,
-  install
-}
+  install,
+};
