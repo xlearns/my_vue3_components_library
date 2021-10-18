@@ -6,6 +6,7 @@ import wxFrame from "./frame/index";
 import wxButton from "./button/index";
 import wxProcess from "./progress/index";
 import wxLoading from "./loading/index";
+import wxDraggable from './draggable/index'
 import { wxCheckbox, wxCheckboxGroup } from "./checkbox";
 import {
   wxTable,
@@ -20,6 +21,7 @@ import wxLogin from "./login/";
 import wxCaptcha from "./captcha";
 import "./theme/index.scss";
 const components = [
+  wxDraggable,
   wxForm,
   wxCaptcha,
   wxFormItem,

@@ -1,0 +1,27 @@
+
+// $liColor:#f5ad1b,#5f89ce,#94bf45,#da8ec5,#78bfc2,#bec278,#bbe278,#80af11,#af6511;
+// .drag-container{
+// 	display: flex;	
+// 	flex-wrap: wrap;
+// 	height: 100vh;
+// 	.item{
+// 		width:33.33%;
+// 		height:33.33%;
+// 		display: flex;
+// 		align-items: center;
+// 	  justify-content: center;
+// 		margin:0;
+// 		padding:0;
+// 		border:none
+// 	}
+// 	@each $c in $liColor{
+// 		 $i:index($liColor,$c);        // 获取 $c 在数组中的索引，并赋值给 $i 赋值用冒号，不是等号~！
+//      .item:nth-child( #{$i} ){      // 经典的地方来了，SCSS 循环是从 1 开始，不是 0 哦~
+//        background: $c;           // 背景色
+//        &:hover{
+//         //  background: lighten($c,10%);    // hover 后的颜色
+//        }
+//      }
+
+// 	}
+// }

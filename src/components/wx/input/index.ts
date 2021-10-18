@@ -1,4 +1,4 @@
-import Input from '../form/src/input/wxInput.vue'
+import Input from './src/wxInput.vue'
 Input.install = function(Vue:any){
   Vue.component(Input.name, Input);
 }

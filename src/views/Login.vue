@@ -1,6 +1,5 @@
 <template>
-	<div @keyup.prevent="keyup">
-		<wx-table :data="data">
+	<!-- <wx-table :data="data">
 			<wx-column label="日期" prop="date" />
 			<wx-column label="姓名" prop="name" />
 			<wx-column label="省份" prop="address" />
@@ -9,10 +8,10 @@
 					<wx-button @click="delClick(scope)">删除</wx-button>
 				</template>
 			</wx-column>
-		</wx-table>
-		<wx-progress :type="otype" :cur="cur"></wx-progress>
-		<h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3>
-		<div>
+		</wx-table> -->
+	<!-- <wx-progress :type="otype" :cur="cur"></wx-progress> -->
+	<!-- <h3 class="title">登录{{ formData.name }}{{ formData.test }}</h3> -->
+	<!-- <div>
 			<wx-form v-model="formData" :rules="formRules" ref="form">
 				<wx-form-item prop="name" label="name123">
 					<wx-input v-model="formData.name" />
@@ -59,16 +58,16 @@
 				@click="testaa"
 				>hello world</wx-button
 			>
-			<!-- <wx-button @click="resetForm">reset</wx-button> -->
-		</div>
-		<wx-row>
+		 <wx-button @click="resetForm">reset</wx-button>
+		</div> -->
+	<!-- <wx-row>
 			<wx-col :span="6"><div style="background: red">123</div></wx-col>
 			<wx-col :span="6"><div style="background: red">123</div></wx-col>
 			<wx-col :span="6"><div style="background: red">123</div></wx-col>
 			<wx-col :span="6"><div style="background: red">123</div></wx-col>
-		</wx-row>
-		<!-- <wx-loading to="#foot-container"></wx-loading> -->
-		<!-- <wxDialog
+		</wx-row> -->
+	<!-- <wx-loading to="#foot-container"></wx-loading> -->
+	<!-- <wxDialog
 			v-model="ot"
 			title="测试"
 			width="90%"
@@ -89,7 +88,7 @@
 				<wxButton type="danger">reset</wxButton>
 			</template>
 		</wxDialog> -->
-		<wx-captcha
+	<!-- <wx-captcha
 			ref="dragVerify"
 			:plain="true"
 			v-model="isPassing"
@@ -99,8 +98,36 @@
 			:logo="imgsrc"
 			@refresh="reimg"
 			@passcallback="pass"
-		></wx-captcha>
-	</div>
+		></wx-captcha> -->
+	<!-- <wxDialog
+		v-model="ot"
+		:showClose="true"
+		:closeOnClickModal="false"
+		:fullscreen="ot"
+	>
+		<template #title>
+			<h1>hello world</h1>
+		</template>
+		<template #footer>
+			<wx-button type="success">123</wx-button>
+			<wx-button type="danger">123</wx-button>
+		</template>
+	</wxDialog> -->
+	<!-- <wxInput :disabled="false" type="password" :showEye="false" v-model="msg">
+	</wxInput>
+	<div style="margin: 20px 0px"></div>
+	<wxInput :disabled="true" type="text" :showEye="false" v-model="msg">
+	</wxInput>
+	<div style="margin: 20px 0px"></div>
+	<wxInput :disabled="false" type="password" :showEye="false" v-model="msg">
+	</wxInput> -->
+	<!-- <wxDraggable v-model="myArray">
+		<div v-for="element in myArray" :key="element.num" class="item">
+			{{ element.num }}
+		</div>
+	</wxDraggable> -->
+	<div style="height: 1000vh"></div>
+	<wx-button :goTop="fs" id="goTop">全屏</wx-button>
 </template>
 
 <script lang="ts">
@@ -112,9 +139,7 @@ import {
 	toRefs,
 	ref,
 	onUnmounted,
-	watch,
 	getCurrentInstance,
-	computed,
 } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElNotification } from "element-plus";
@@ -123,10 +148,7 @@ import { useStore } from "vuex";
 import { login } from "@/utils/api";
 import { throttle } from "throttle-debounce";
 import performance from "@/utils/performance";
-import wxButton from "../components/wx/button/src/wxButton.vue";
-import WxFormItem from "../components/wx/form/src/item/wxFormItem.vue";
 export default defineComponent({
-	components: { wxButton, WxFormItem },
 	setup() {
 		console.log("白屏时间:", performance.blankTime);
 		const router = useRouter();
@@ -136,6 +158,22 @@ export default defineComponent({
 		const form = ref();
 		const state = reactive({
 			ot: true,
+			fs: {
+				isEnabled: true,
+				target: "#goTop",
+			},
+			myArray: [
+				{ grid: "cn", num: 1 },
+				{ grid: "cn", num: 2 },
+				{ grid: "cn", num: 3 },
+				{ grid: "cn", num: 4 },
+				{ grid: "cn", num: 5 },
+				{ grid: "cn", num: 6 },
+				{ grid: "cn", num: 7 },
+				{ grid: "cn", num: 8 },
+				{ grid: "cn", num: 9 },
+			],
+			msg: "hello",
 			imgsrc:
 				"data:image/jpeg;base64,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",
 			isPassing: false,

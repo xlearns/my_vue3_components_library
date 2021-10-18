@@ -1,4 +1,4 @@
-import FormItem from '../form/src/item/wxFormItem.vue'
+import FormItem from './src/wxFormItem.vue'
 FormItem.install = function(Vue:any){
   Vue.component(FormItem.name, FormItem);
 }

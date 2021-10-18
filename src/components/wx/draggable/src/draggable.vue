@@ -1,125 +1,56 @@
 <template>
-	<div class="drag-container">
-		<!-- grid列表拖拽 -->
-		<el-row :gutter="25">
-			<el-col :xs="25" :sm="8" :md="8" :lg="8">
-				<el-card>
-					<template #header>
-						<div class="card-header">
-							<span>grid列表拖拽</span>
-						</div>
-					</template>
-					<draggable
-						v-model="gridLists"
-						class="grid-container"
-						item-key="grid"
-						animation="300"
-						chosenClass="chosen"
-						forceFallback="true"
-					>
-						<template #item="{ element }">
-							<div :class="'item' + ' ' + 'item-' + element.num">
-								{{ element.num }}
-							</div>
-						</template>
-					</draggable>
-				</el-card>
-			</el-col>
-
-			<el-col :xs="25" :sm="8" :md="8" :lg="8">
-				<el-card>
-					<template #header>
-						<div class="card-header">
-							<span>单列拖拽</span>
-						</div>
-					</template>
-					<!-- 单列拖拽 -->
-					<draggable
-						v-model="lists"
-						item-key="name"
-						@change="change"
-						chosen-class="chosen"
-						force-fallback="true"
-						animation="300"
-					>
-						<template #item="{ element, index }">
-							<div class="item-single">{{ element.name }} {{ index }}</div>
-						</template>
-					</draggable>
-				</el-card>
-			</el-col>
-
-			<el-col :xs="25" :sm="8" :md="8" :lg="8">
-				<el-card>
-					<template #header>
-						<div class="card-header">
-							<span>拖拽实现元素位置切换</span>
-						</div>
-					</template>
-					<!-- 拖拽实现元素位置切换 -->
-					<div class="cut-container">
-						<div
-							class="item-cut"
-							v-for="(item, index) in cutLists"
-							:key="index"
-						>
-							<p>{{ item.name }}</p>
-						</div>
-					</div>
-				</el-card>
-			</el-col>
-		</el-row>
-	</div>
+	<transition>
+		<div class="drag-container">
+			<slot></slot>
+		</div>
+	</transition>
 </template>
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import draggable from "vuedraggable";
-
-let gridLists = ref<Array<Object>>([
-	{ grid: "cn", num: 1 },
-	{ grid: "cn", num: 2 },
-	{ grid: "cn", num: 3 },
-	{ grid: "cn", num: 4 },
-	{ grid: "cn", num: 5 },
-	{ grid: "cn", num: 6 },
-	{ grid: "cn", num: 7 },
-	{ grid: "cn", num: 8 },
-	{ grid: "cn", num: 9 },
-]);
-
-let lists = ref<Array<Object>>([
-	{ people: "cn", id: 1, name: "www.itxst.com" },
-	{ people: "cn", id: 2, name: "www.baidu.com" },
-	{ people: "cn", id: 3, name: "www.taobao.com" },
-	{ people: "cn", id: 4, name: "www.google.com" },
-]);
-
-let cutLists = ref<Array<Object>>([
-	{ people: "cn", id: 1, name: "cut1" },
-	{ people: "cn", id: 2, name: "cut2" },
-	{ people: "cn", id: 3, name: "cut3" },
-	{ people: "cn", id: 4, name: "cut4" },
-]);
-
-const change = (evt: any): void => {
-	console.log("evt: ", evt);
-};
-
-onMounted(() => {
-	console.log(draggable);
-	// 使用原生sortable实现元素位置切换
-	// @ts-ignore
-	// eslint-disable-next-line no-undef
-	new Sortable(document.querySelector(".cut-container"), {
-		swap: true,
-		forceFallback: true,
-		chosenClass: "chosen",
-		swapClass: "highlight",
-		animation: 300,
-	});
+<script lang="ts">
+import { defineComponent, toRefs, reactive, onMounted } from "vue";
+//拖拽
+import Sortable from "sortablejs";
+console.log(Sortable);
+export default defineComponent({
+	name: "wxDraggable",
+	props: {
+		modelValue: {},
+		config: {
+			type: Object,
+			default: () => {
+				//Grid
+				return {
+					multiDrag: true, // Enable multi-drag
+					selectedClass: "selected", // The class applied to the selected items
+					fallbackTolerance: 3, // So that we can select items on mobile
+					animation: 150,
+				};
+			},
+		},
+	},
+	setup(props, { emit }) {
+		let state = reactive({
+			drag: true,
+			sortable: null,
+		});
+		const methods = {};
+		onMounted(() => {
+			let el = document.querySelector(".drag-container");
+			if (!props.config.onEnd) {
+				props.config["onEnd"] = function (evt: any) {
+					props.modelValue.splice(
+						evt.newIndex,
+						0,
+						props.modelValue.splice(evt.oldIndex, 1)[0]
+					);
+					emit("update:modelValue", props.modelValue);
+				};
+			}
+			state.sortable = Sortable.create(el, props.config);
+		});
+		return {
+			...toRefs(state),
+			...methods,
+		};
+	},
 });
 </script>
-
-<style lang="scss" scoped>
-@import "@/components/wx/draggable/src/draggable.scss";
-</style>
