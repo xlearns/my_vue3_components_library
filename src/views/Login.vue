@@ -126,8 +126,9 @@
 			{{ element.num }}
 		</div>
 	</wxDraggable> -->
-	<div style="height: 1000vh"></div>
-	<wx-button :goTop="fs" id="goTop">全屏</wx-button>
+	<!-- <div style="height: 1000vh"></div>
+	<wx-button :goTop="fs" id="goTop">全屏</wx-button> -->
+
 </template>
 
 <script lang="ts">

@@ -7,6 +7,7 @@ import wxButton from "./button/index";
 import wxProcess from "./progress/index";
 import wxLoading from "./loading/index";
 import wxDraggable from './draggable/index'
+import wxPagination from './pagination/index'
 import { wxCheckbox, wxCheckboxGroup } from "./checkbox";
 import {
   wxTable,
@@ -39,6 +40,7 @@ const components = [
   wxColumn,
   wxCol,
   wxRow,
+  wxPagination,
   wxDialog,
   wxLogin,
 ];
