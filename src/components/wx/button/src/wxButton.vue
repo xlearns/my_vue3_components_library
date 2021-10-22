@@ -48,6 +48,7 @@ export default defineComponent({
 				return ["medium", "small", "mini", ""].includes(val);
 			},
 		},
+		//返回顶部
 		goTop: {
 			type: Object,
 			default: () => {

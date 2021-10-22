@@ -9,7 +9,6 @@
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
 //拖拽
 import Sortable from "sortablejs";
-console.log(Sortable);
 export default defineComponent({
 	name: "wxDraggable",
 	props: {

@@ -8,13 +8,14 @@ import wxProcess from "./progress/index";
 import wxLoading from "./loading/index";
 import wxDraggable from './draggable/index'
 import wxPagination from './pagination/index'
+import {Scroll,ScrollLoader} from './scroll/index'
 import { wxCheckbox, wxCheckboxGroup } from "./checkbox";
 import {
   wxTable,
   wxTableHead,
   wxTableBody,
   wxTableTd,
-  wxColumn,
+  wxColumn
 } from "./table/index";
 import { wxCol, wxRow } from "./layout/index";
 import wxDialog from "./dialog/index";
@@ -43,6 +44,8 @@ const components = [
   wxPagination,
   wxDialog,
   wxLogin,
+  Scroll,
+  ScrollLoader
 ];
 const install = function (Vue: any, opts = {}) {
   components.forEach((component: any) => {

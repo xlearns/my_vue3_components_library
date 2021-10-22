@@ -60,6 +60,3 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped>
-@import "@/components/wx/progress/src/progress.scss";
-</style>

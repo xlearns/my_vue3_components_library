@@ -128,7 +128,65 @@
 	</wxDraggable> -->
 	<!-- <div style="height: 1000vh"></div>
 	<wx-button :goTop="fs" id="goTop">全屏</wx-button> -->
-
+	<bd-scroll @botton="bottomFn" @top="topFn" :minHeight="minHeight">
+		<div class="test">
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+			<p>123</p>
+		</div>
+	</bd-scroll>
 </template>
 
 <script lang="ts">
@@ -154,6 +212,7 @@ export default defineComponent({
 		console.log("白屏时间:", performance.blankTime);
 		const router = useRouter();
 		const store = useStore();
+		const scroll = ref();
 		const verifyRef = ref(null);
 		const { proxy }: any = getCurrentInstance();
 		const form = ref();
@@ -163,6 +222,7 @@ export default defineComponent({
 				isEnabled: true,
 				target: "#goTop",
 			},
+			listScroll: [] as any,
 			myArray: [
 				{ grid: "cn", num: 1 },
 				{ grid: "cn", num: 2 },
@@ -263,12 +323,50 @@ export default defineComponent({
 			verify: "",
 			loginLoading: false,
 			loginSuc: false,
+			page: 1,
 		});
-		let index = 0;
-		setInterval(() => {
-			state.cur += 0.05;
-		}, 1000 / 60);
-		const methods = {
+		const timeout = function (time: any) {
+			//延迟执行 setTimeout
+			//异步 promise包裹
+			//异步延迟执行
+			return new Promise((resolve) => {
+				setTimeout(resolve, time);
+			});
+		};
+		const _fetchList = async function (page = 1, pageSize = 10) {
+			try {
+				await timeout(1000);
+				if (page < 3) {
+					// 模拟数据返回
+					return Array.from(
+						{ length: pageSize },
+						(value, index) => `第${page}页的数据${index}`
+					);
+				} else {
+					// 模拟已到达最后一页时的数据返回
+					return Array.from(
+						{ length: pageSize / 2 },
+						(value, index) => `最后一页,第${page}页的数据${index}`
+					);
+				}
+			} catch (e) {
+				return false;
+			}
+		};
+
+		const methods: any = {
+			bottomFn(v: any) {
+				console.log("下拉");
+				//重置
+				v();
+			},
+			topFn(v: any) {
+				console.log("上拉");
+				v();
+			},
+			pullingUp() {
+				console.log(2);
+			},
 			bc() {
 				console.log(1);
 			},
@@ -393,10 +491,7 @@ export default defineComponent({
 				form.value.resetFields();
 			},
 		};
-		onUnmounted(() => {
-			document.onkeydown = undefined;
-		});
-		return { ...toRefs(state), ...methods, verifyRef, form };
+		return { ...toRefs(state), ...methods, verifyRef, form, scroll };
 	},
 });
 </script>

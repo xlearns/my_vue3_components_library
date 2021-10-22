@@ -6,7 +6,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue(),vueJsx()],
   server:{
-    host:'127.0.0.1',
+    host:'192.168.8.53',
     port:8081,
     strictPort: false,
     https: false,
